@@ -2,8 +2,8 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 14:24:39
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 14:53:03
- * @Description: file content
+ * @LastEditTime: 2021-01-04 15:57:18
+ * @Description: application.vue
 -->
 <template>
     <div id="app">
