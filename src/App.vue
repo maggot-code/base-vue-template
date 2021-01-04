@@ -2,12 +2,14 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 14:24:39
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 15:57:18
+ * @LastEditTime: 2021-01-04 22:38:57
  * @Description: application.vue
 -->
 <template>
     <div id="app">
-        <router-view />
+        <transition>
+            <router-view />
+        </transition>
     </div>
 </template>
 
