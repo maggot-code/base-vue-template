@@ -2,8 +2,8 @@
  * @Author: maggot-code
  * @Date: 2020-12-22 22:26:52
  * @LastEditors: maggot-code
- * @LastEditTime: 2020-12-29 14:29:01
- * @Description: file content
+ * @LastEditTime: 2021-01-04 17:59:25
+ * @Description: vue config options
  */
 const resolves = dir => require('path').join(__dirname, dir)
 module.exports = {
