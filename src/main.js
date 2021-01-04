@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 14:24:35
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 18:00:54
+ * @LastEditTime: 2021-01-04 23:45:53
  * @Description: application main options
  */
 import Vue from 'vue';
