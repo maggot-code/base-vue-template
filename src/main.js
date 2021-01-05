@@ -2,10 +2,11 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 14:24:35
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 15:41:44
+ * @LastEditTime: 2021-01-05 22:02:54
  * @Description: application main options
  */
 import '@/utils/error/rejection';
+import '@/utils/error/vueErrprHandler';
 
 import Vue from 'vue';
 import router from '@/router';

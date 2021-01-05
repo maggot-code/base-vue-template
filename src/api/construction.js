@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 23:10:23
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 17:13:56
+ * @LastEditTime: 2021-01-05 22:43:17
  * @Description: construction api
  */
 import { Request } from "@/utils/axios/httpRequest";
