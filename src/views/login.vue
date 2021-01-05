@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 21:59:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 16:55:07
+ * @LastEditTime: 2021-01-05 17:03:56
  * @Description: login.vue
 -->
 <template>
@@ -27,9 +27,9 @@ export default {
     methods: {},
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {
-        // ping().then((res) => {
-        //     console.log(res);
-        // });
+        ping().then((res) => {
+            console.log(res);
+        });
         // getHost().then((res) => {
         //     console.log(res);
         // });

@@ -2,53 +2,24 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 09:34:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 16:55:39
+ * @LastEditTime: 2021-01-05 18:10:34
  * @Description: axios http request
  */
 import axios from 'axios';
-import { isString, isArray, defaultTo } from 'lodash';
-import { flake, regEXPUrl } from '@/utils/tool';
+import { isString, isArray, defaultTo, head } from 'lodash';
+import { regEXPUrl } from '@/utils/tool';
 
-const TIMEOUT = 1000;
-const RESPONSETYPE = "json";
-const RESPONSEENCODING = "utf8";
-
-/**
- * @description: 用于设置axios配置对象，将初始设置与扩展设置参数合并
- */
-const setUpConfig = () => {
-    return {};
-}
-
-/**
- * @description: 请求拦截器
- */
-const interceptRequest = (instance) => {
-    instance.interceptors.request.use(config => {
-        return config;
-    }, error => {
-        return Promise.reject(error);
-    })
-}
-
-/**
- * @description: 响应拦截器
- */
-const interceptResponse = (instance) => {
-    instance.interceptors.response.use(res => {
-        return {};
-    }, error => {
-        return Promise.reject(error);
-    })
-}
+import setUpConfig from '@/utils/axios/setUpConfig';
+import interceptRequest from '@/utils/axios/interceptRequest';
+import interceptResponse from '@/utils/axios/interceptResponse';
 
 /**
  * @description: 通过axios创建一个独立的请求实例
  * @param {String} baseUrl * 基础url地址
  * @param {Object} options {} 请求实例的扩展参数对象
  */
-const send = (baseUrl, options = {}) => {
-    const { url } = options;
+const Send = (baseUrl, options = {}) => {
+    const { url, headers } = options;
     if (!url && !isString(url) && !regEXPUrl(url)) {
         return Promise.reject('axios instance need "options.url<String & URL>"');
     }
@@ -56,14 +27,11 @@ const send = (baseUrl, options = {}) => {
         return Promise.reject('axios instance need "baseUrl<String & URL>"');
     }
 
-    const instance = axios.create(Object.assign({}, {
-        baseUrl: baseUrl
-    }, {}));
-
+    const instance = axios.create({ baseUrl: baseUrl });
     interceptRequest(instance);
     interceptResponse(instance);
 
-    return instance(Object.assign({}, options, setUpConfig()));
+    return instance(Object.assign({}, options, setUpConfig(headers)));
 }
 
 /**
@@ -93,7 +61,7 @@ const SendAll = (requestQueue = []) => {
  * @param {String} baseUrl * 请求实例发送地址
  */
 const Request = (options, baseUrl = process.env.VUE_APP_BASE_URL) => {
-    return new Promise((resolve, reject) => send(baseUrl, options)
+    return new Promise((resolve, reject) => Send(baseUrl, options)
         .then(res => {
             resolve(res)
         })
@@ -103,4 +71,4 @@ const Request = (options, baseUrl = process.env.VUE_APP_BASE_URL) => {
         }))
 }
 
-export { SendAll, Request };
+export { Request, Send, SendAll };
