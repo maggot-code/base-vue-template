@@ -2,11 +2,11 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 09:34:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 18:10:34
+ * @LastEditTime: 2021-01-05 22:49:37
  * @Description: axios http request
  */
 import axios from 'axios';
-import { isString, isArray, defaultTo, head } from 'lodash';
+import { isString, isArray } from 'lodash';
 import { regEXPUrl } from '@/utils/tool';
 
 import setUpConfig from '@/utils/axios/setUpConfig';
@@ -19,7 +19,7 @@ import interceptResponse from '@/utils/axios/interceptResponse';
  * @param {Object} options {} 请求实例的扩展参数对象
  */
 const Send = (baseUrl, options = {}) => {
-    const { url, headers } = options;
+    const { url, headers, tag } = options;
     if (!url && !isString(url) && !regEXPUrl(url)) {
         return Promise.reject('axios instance need "options.url<String & URL>"');
     }
@@ -31,7 +31,7 @@ const Send = (baseUrl, options = {}) => {
     interceptRequest(instance);
     interceptResponse(instance);
 
-    return instance(Object.assign({}, options, setUpConfig(headers)));
+    return instance(Object.assign({}, options, setUpConfig(tag, headers)));
 }
 
 /**

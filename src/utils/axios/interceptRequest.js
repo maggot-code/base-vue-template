@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 18:06:05
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 18:11:05
+ * @LastEditTime: 2021-01-05 22:43:45
  * @Description: axios interceptRequest
  */
 import axios from 'axios';
@@ -21,6 +21,7 @@ const interceptRequest = (instance) => {
         config.cancelToken = cancelToken(requestId);
         config.requestId = requestId;
 
+        console.log(config);
         return config;
     }, error => {
         return Promise.reject(error);
