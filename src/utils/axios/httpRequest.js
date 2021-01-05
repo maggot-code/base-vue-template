@@ -2,12 +2,12 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 09:34:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 15:42:49
+ * @LastEditTime: 2021-01-05 16:55:39
  * @Description: axios http request
  */
 import axios from 'axios';
-import { isString, defaultTo, flow } from 'lodash';
-import { flake, errLog, regEXPUrl } from '@/utils/tool';
+import { isString, isArray, defaultTo } from 'lodash';
+import { flake, regEXPUrl } from '@/utils/tool';
 
 const TIMEOUT = 1000;
 const RESPONSETYPE = "json";
@@ -36,7 +36,6 @@ const interceptRequest = (instance) => {
  */
 const interceptResponse = (instance) => {
     instance.interceptors.response.use(res => {
-        console.log(res);
         return {};
     }, error => {
         return Promise.reject(error);
@@ -68,6 +67,27 @@ const send = (baseUrl, options = {}) => {
 }
 
 /**
+ * @description: 资源请求发起方法（多个）
+ * @param {Array} requestQueue [] 资源请求实例的列表
+ */
+const SendAll = (requestQueue = []) => {
+    if (!isArray(requestQueue) || requestQueue.length <= 0) {
+        return Promise.reject('SendAll need "requestQueue[Array & length > 0]"');
+    }
+
+    return new Promise((resolve, reject) => {
+        axios.all([...requestQueue])
+            .then(axios.spread((...queue) => {
+                resolve(queue)
+            }))
+            .catch(error => {
+                // handler...
+                reject(error)
+            })
+    })
+}
+
+/**
  * @description: 资源请求发起方法
  * @param {Object} options * 请求实例携带参数
  * @param {String} baseUrl * 请求实例发送地址
@@ -83,4 +103,4 @@ const Request = (options, baseUrl = process.env.VUE_APP_BASE_URL) => {
         }))
 }
 
-export default Request;
+export { SendAll, Request };
