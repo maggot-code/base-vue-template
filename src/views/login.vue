@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 21:59:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 22:05:06
+ * @LastEditTime: 2021-01-05 15:41:21
  * @Description: login.vue
 -->
 <template>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Request from "@/utils/axios/httpRequest";
 export default {
     name: "mg-login",
     components: {},
@@ -24,7 +25,11 @@ export default {
     //方法集合
     methods: {},
     //生命周期 - 创建完成（可以访问当前this实例）
-    created() {},
+    created() {
+        Request({
+            url: "/api/v1/ping",
+        });
+    },
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {},
     beforeCreate() {}, //生命周期 - 创建之前
