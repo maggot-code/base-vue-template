@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2020-12-22 21:56:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2020-12-29 14:33:52
+ * @LastEditTime: 2021-01-07 10:18:40
  * @Description: file content
  */
 module.exports = {
@@ -19,8 +19,8 @@ module.exports = {
     },
     rules: {
         'indent': ['error', 4],
-        'no-console': process.env.NODE_ENV === 'pro' ? 'warn' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'pro' ? 'warn' : 'off',
+        'no-console': 'off',
+        'no-debugger': 'off',
         'semi': 'off',
         'quotes': 'off',
         'comma-dangle': 'off',

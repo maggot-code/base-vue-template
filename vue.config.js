@@ -2,34 +2,35 @@
  * @Author: maggot-code
  * @Date: 2020-12-22 22:26:52
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 17:59:25
+ * @LastEditTime: 2021-01-07 12:35:11
  * @Description: vue config options
  */
-const resolves = dir => require('path').join(__dirname, dir)
+const resolves = dir => require('path').join(__dirname, dir);
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
+const pluginList = [
+    new LodashModuleReplacementPlugin(),
+    new CompressionWebpackPlugin({
+        filename: info => `${info.path}.gz${info.query}`,
+        algorithm: 'gzip',
+        threshold: 10240, // 只有大小大于该值的资源会被处理 10240
+        test: new RegExp('\\.(' + ['js', 'css', 'json'].join('|') + ')$'),
+        minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
+        deleteOriginalAssets: false // 删除原文件
+    })
+]
+
 module.exports = {
     publicPath: './',
     outputDir: 'dist', // 打包输出目录
     assetsDir: 'static',
-    filenameHashing: true,
-    chainWebpack: config => {
-        config
-            .plugin('html')
-            .tap(args => {
-                args[0].title = process.env.VUE_APP_TITLE
-                return args
-            })
-        config.resolve.alias
-            .set('@', resolves('src'))
-    },
-    configureWebpack: config => {
-        // 调试JS
-        if (process.env.NODE_ENV === 'dev') {
-            config.devtool = 'source-map'
-        }
-    },
+    productionSourceMap: false,
     css: {
         // 查看CSS属于哪个css文件
-        sourceMap: process.env.NODE_ENV === 'dev'
+        sourceMap: process.env.NODE_ENV === 'development',
+        extract: true
     },
     devServer: {
         https: false,
@@ -43,5 +44,54 @@ module.exports = {
                 pathReWrite: { '^/api/v1': '' }
             },
         }
-    }
+    },
+    chainWebpack: config => {
+        config.resolve.alias.set('@', resolves('src'));
+        config.plugin('html').tap(args => {
+            args[0].title = process.env.VUE_APP_TITLE
+            return args
+        });
+        // 移除prefetch插件，避免加载多余的资源
+        config.plugins.delete('prefetch');
+        // 移除 preload 插件，避免加载多余的资源
+        config.plugins.delete('preload');
+        config.optimization.minimize(true);
+        config.optimization.splitChunks({ chunks: 'all' });
+    },
+    configureWebpack: config => {
+        // 调试JS
+        if (process.env.NODE_ENV === 'development') {
+            config.devtool = 'source-map';
+            config["performance"] = {//打包文件大小配置
+                "maxEntrypointSize": 10240 * 100,
+                "maxAssetSize": 10240 * 100
+            };
+        } else {
+            pluginList.push(new BundleAnalyzerPlugin());
+        }
+        config.mode = 'production';
+        // 公共代码抽离
+        config.optimization = {
+            // 分割代码块
+            splitChunks: {
+                cacheGroups: {
+                    //公用模块抽离
+                    common: {
+                        chunks: 'initial',
+                        minSize: 0, //大于0个字节
+                        minChunks: 2, //抽离公共代码时，这个代码块最小被引用的次数
+                    },
+                    //第三方库抽离
+                    vendor: {
+                        priority: 1, //权重
+                        test: /node_modules/,
+                        chunks: 'initial',
+                        minSize: 0, //大于0个字节
+                        minChunks: 2, //在分割之前，这个代码块最小应该被引用的次数
+                    },
+                },
+            }
+        };
+        config.plugins.push(...pluginList);
+    },
 }
