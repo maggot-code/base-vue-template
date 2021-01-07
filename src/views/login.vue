@@ -2,11 +2,14 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 21:59:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 17:03:56
+ * @LastEditTime: 2021-01-06 15:32:02
  * @Description: login.vue
 -->
 <template>
-    <div class="mg-login">mg-login</div>
+    <div class="mg-login">
+        mg-login
+        <el-button type="danger" @click="closeLink">断开连接</el-button>
+    </div>
 </template>
 
 <script>
@@ -24,7 +27,11 @@ export default {
     //监控data中的数据变化
     watch: {},
     //方法集合
-    methods: {},
+    methods: {
+        closeLink() {
+            console.log(11);
+        },
+    },
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {
         ping().then((res) => {

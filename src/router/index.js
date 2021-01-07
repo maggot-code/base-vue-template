@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 18:04:32
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 23:21:41
+ * @LastEditTime: 2021-01-07 11:27:53
  * @Description: router inlet
  */
 import Vue from 'vue';

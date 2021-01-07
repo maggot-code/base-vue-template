@@ -2,9 +2,15 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 18:06:13
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 22:36:04
+ * @LastEditTime: 2021-01-06 11:12:04
  * @Description: axios interceptResponse
  */
+import store from '@/store';
+
+const deleteRequest = (config) => {
+    store.dispatch('_removeRequestQueue', config.requestId);
+}
+
 const castResponse = (res) => ({
     data: res.data,
     status: res.status,
@@ -25,6 +31,8 @@ const responseRedirect = (res) => {
  */
 const interceptResponse = (instance) => {
     instance.interceptors.response.use(res => {
+        deleteRequest(res.config);
+
         if (res.status >= 200 && res.status < 300) {
             // 200 ~ 300 handler ...
             return responseSuccess(res);
@@ -34,25 +42,18 @@ const interceptResponse = (instance) => {
             return responseRedirect(res);
         }
     }, error => {
+        const errorConfig = error.config;
+        const errorMessage = error.message;
         const errorResponse = error.response;
         const errorRequest = error.request;
-        const errorMessage = error.message;
-        const errorConfig = error.config;
 
-        // if (errorResponse) {
-        //     console.log(errorResponse.data);
-        //     console.log(errorResponse.status);
-        //     console.log(errorResponse.headers);
-        // } else if (errorRequest) {
-        //     console.log(errorRequest);
-        // } else {
-        //     console.log(errorMessage);
-        // }
-
-        console.log(errorResponse);
-        console.log(errorRequest);
-        console.log(errorMessage);
-        console.log(errorConfig);
+        if (errorResponse) {
+            console.log(errorResponse.data);
+            console.log(errorResponse.status);
+            console.log(errorResponse.headers);
+        } else if (errorRequest) {
+            console.log(errorRequest);
+        }
 
         return Promise.reject(error);
     })

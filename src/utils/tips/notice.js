@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 21:42:06
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 21:49:51
+ * @LastEditTime: 2021-01-07 09:30:38
  * @Description: utils notice
  */
 import Vue from 'vue'
@@ -19,7 +19,7 @@ const NOTICEMSGPOS = {
 let NoticePromise = Promise.resolve();
 // 通知
 const notice = (params) => {
-    if ((isNil(params) && !isObject(params)) || process.env.NODE_ENV !== 'dev') {
+    if ((isNil(params) && !isObject(params)) || process.env.NODE_ENV !== 'development') {
         Notification.closeAll();
         return false;
     }

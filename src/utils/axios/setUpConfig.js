@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 18:09:22
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 23:03:02
+ * @LastEditTime: 2021-01-06 10:15:45
  * @Description: axios set up config
  */
 import { isString } from 'lodash';
@@ -18,10 +18,10 @@ const VALIDATESTATUS = (status) => status < 400;
  */
 const setUpConfig = (tag = 'base', headers = {}) => {
     const config = {
+        requestTag: isString(tag) ? tag : 'base',
         timeout: TIMEOUT,
         responseType: RESPONSETYPE,
         responseEncoding: RESPONSEENCODING,
-        responseTag: isString(tag) ? tag : 'base',
         validateStatus: VALIDATESTATUS,
         headers: Object.assign({}, {
             'Access-Control-Allow-Origin': window.location.origin,
