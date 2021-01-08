@@ -1,25 +1,42 @@
 <!--
  * @Author: maggot-code
- * @Date: 2021-01-07 22:31:36
+ * @Date: 2021-01-08 17:54:47
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-08 18:00:33
- * @Description: test.vue
+ * @LastEditTime: 2021-01-08 18:18:42
+ * @Description: component mg-form -> mg-radio.vue
 -->
 <template>
-    <div class="mg-test" ref="testEl">
-        mg-test
-        <mg-radio></mg-radio>
-    </div>
+    <el-radio-group class="mg-radio" v-model="radio" size="mini">
+        <template v-if="mold === 'radio'">
+            <el-radio :label="0">默认选项</el-radio>
+        </template>
+
+        <template v-else-if="mold === 'button'">
+            <el-radio-button :label="0">按钮选项</el-radio-button>
+        </template>
+
+        <template v-else>
+            <el-radio :label="0">默认选项</el-radio>
+        </template>
+    </el-radio-group>
 </template>
 
 <script>
-import { MgRadio } from "@/components/mg-form";
 export default {
-    name: "mg-test",
-    components: { MgRadio },
+    name: "mg-radio",
+    mixins: [],
+    components: {},
+    props: {
+        mold: {
+            type: String,
+            default: () => "radio",
+        },
+    },
     data() {
         //这里存放数据
-        return {};
+        return {
+            radio: 0,
+        };
     },
     //监听属性 类似于data概念
     computed: {},
