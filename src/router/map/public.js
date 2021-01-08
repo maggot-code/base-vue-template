@@ -2,12 +2,13 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 21:38:43
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-07 22:31:24
+ * @LastEditTime: 2021-01-08 12:58:08
  * @Description: router map public
  */
 export default [
     {
         path: '/',
+        redirect: '/home',
         name: 'root',
         meta: {
             title: "Root"

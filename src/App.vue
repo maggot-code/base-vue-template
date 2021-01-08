@@ -2,17 +2,19 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 14:24:39
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 22:38:57
+ * @LastEditTime: 2021-01-08 09:30:59
  * @Description: application.vue
 -->
 <template>
     <div id="app">
-        <transition>
-            <router-view />
-        </transition>
+        <router-view />
     </div>
 </template>
-
+<script>
+export default {
+    name: "App",
+};
+</script>
 <style lang="scss">
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
