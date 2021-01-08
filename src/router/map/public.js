@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 21:38:43
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-04 22:48:02
+ * @LastEditTime: 2021-01-07 22:31:24
  * @Description: router map public
  */
 export default [
@@ -21,4 +21,12 @@ export default [
         },
         component: () => import('@/views/login.vue')
     },
+    {
+        path: '/test',
+        name: 'test',
+        meta: {
+            title: 'test'
+        },
+        component: () => import('@/views/test.vue')
+    }
 ]
