@@ -2,11 +2,11 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-07 22:32:29
+ * @LastEditTime: 2021-01-08 17:28:10
  * @Description: test.vue
 -->
 <template>
-    <div class="mg-test">mg-test</div>
+    <div class="mg-test" ref="testEl">mg-test</div>
 </template>
 
 <script>
@@ -36,5 +36,4 @@ export default {
     activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang='scss' scoped></style>
