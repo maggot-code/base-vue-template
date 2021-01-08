@@ -2,25 +2,32 @@
  * @Author: maggot-code
  * @Date: 2021-01-04 21:59:33
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-06 15:32:02
+ * @LastEditTime: 2021-01-08 13:27:32
  * @Description: login.vue
 -->
 <template>
     <div class="mg-login">
         mg-login
         <el-button type="danger" @click="closeLink">断开连接</el-button>
+        <el-button type="danger" @click="login">登录</el-button>
     </div>
 </template>
 
 <script>
+import store from "@/store";
 import { SendAll } from "@/utils/axios/httpRequest";
 import { ping, getHost } from "@/api/construction";
+import { setToken } from "@/utils/cache/cookie";
 export default {
     name: "mg-login",
     components: {},
     data() {
         //这里存放数据
-        return {};
+        return {
+            successJump: {
+                name: this.$route.query.redirect || "root",
+            },
+        };
     },
     //监听属性 类似于data概念
     computed: {},
@@ -30,6 +37,10 @@ export default {
     methods: {
         closeLink() {
             console.log(11);
+        },
+        login() {
+            setToken("f9d8c82c3f4844fa81b9db5c1284b7a0");
+            this.$router.push({ ...this.successJump });
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
