@@ -2,40 +2,94 @@
  * @Author: maggot-code
  * @Date: 2021-01-08 17:54:47
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-08 18:18:42
+ * @LastEditTime: 2021-01-10 18:53:58
  * @Description: component mg-form -> mg-radio.vue
 -->
 <template>
-    <el-radio-group class="mg-radio" v-model="radio" size="mini">
+    <el-radio-group
+        class="mg-radio"
+        v-model="radio"
+        size="mini"
+        @change="radioChange"
+    >
         <template v-if="mold === 'radio'">
-            <el-radio :label="0">默认选项</el-radio>
+            <el-radio
+                v-for="cell in radioData.list"
+                :key="cell.value"
+                :disabled="disabled"
+                :label="cell.value"
+                >{{ cell.label }}</el-radio
+            >
         </template>
 
         <template v-else-if="mold === 'button'">
-            <el-radio-button :label="0">按钮选项</el-radio-button>
+            <el-radio-button
+                v-for="cell in radioData.list"
+                :key="cell.value"
+                :disabled="disabled"
+                :label="cell.value"
+                >{{ cell.label }}</el-radio-button
+            >
         </template>
 
         <template v-else>
-            <el-radio :label="0">默认选项</el-radio>
+            <el-radio
+                v-for="cell in radioData.list"
+                :key="cell.value"
+                :disabled="disabled"
+                :label="cell.value"
+                >{{ cell.label }}</el-radio
+            >
         </template>
     </el-radio-group>
 </template>
 
 <script>
+import mgFormMixins from "../mg-form-mixins";
+import { propsCheck } from "@/utils/tool";
 export default {
     name: "mg-radio",
-    mixins: [],
+    mixins: [mgFormMixins],
     components: {},
     props: {
         mold: {
             type: String,
             default: () => "radio",
+            validator: (value) =>
+                propsCheck(
+                    ["radio", "button"].indexOf(value) !== -1,
+                    'mg-radio props mold need ["radio", "button"]'
+                ),
+        },
+        disabled: {
+            type: Boolean,
+            default: () => false,
+        },
+        radioData: {
+            type: [Object, Array],
+            default: () => ({
+                default: "bf7ef2feb79a422dbe96a3ffb877eebe",
+                list: [
+                    {
+                        value: "bf7ef2feb79a422dbe96a3ffb877eebe",
+                        label: "GoLang",
+                    },
+                    {
+                        value: "0be59f964fa544e795d53b27fe30e4c4",
+                        label: "JavaScript",
+                    },
+                    {
+                        value: "9bba1df431f64637a0b13ad882968d43",
+                        label: "PHP",
+                    },
+                ],
+            }),
         },
     },
     data() {
         //这里存放数据
         return {
-            radio: 0,
+            radio: this.radioData.default,
         };
     },
     //监听属性 类似于data概念
@@ -43,7 +97,19 @@ export default {
     //监控data中的数据变化
     watch: {},
     //方法集合
-    methods: {},
+    methods: {
+        radioChange(value) {
+            const target = this.radioData.list.filter(
+                (item) => item.value === value
+            );
+
+            if (target.length <= 0) {
+                return false;
+            }
+
+            this.$emit("onChange", target[0]);
+        },
+    },
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {},
     //生命周期 - 挂载完成（可以访问DOM元素）
@@ -57,4 +123,13 @@ export default {
     activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.mg-radio {
+    & > label {
+        margin: 5px 0;
+    }
+    & > label.el-radio {
+        margin: 5px 10px;
+    }
+}
+</style>
