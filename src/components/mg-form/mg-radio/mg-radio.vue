@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-08 17:54:47
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-10 18:53:58
+ * @LastEditTime: 2021-01-10 23:43:55
  * @Description: component mg-form -> mg-radio.vue
 -->
 <template>
@@ -14,7 +14,7 @@
     >
         <template v-if="mold === 'radio'">
             <el-radio
-                v-for="cell in radioData.list"
+                v-for="cell in radioEnum"
                 :key="cell.value"
                 :disabled="disabled"
                 :label="cell.value"
@@ -24,7 +24,7 @@
 
         <template v-else-if="mold === 'button'">
             <el-radio-button
-                v-for="cell in radioData.list"
+                v-for="cell in radioEnum"
                 :key="cell.value"
                 :disabled="disabled"
                 :label="cell.value"
@@ -34,7 +34,7 @@
 
         <template v-else>
             <el-radio
-                v-for="cell in radioData.list"
+                v-for="cell in radioEnum"
                 :key="cell.value"
                 :disabled="disabled"
                 :label="cell.value"
@@ -52,6 +52,7 @@ export default {
     mixins: [mgFormMixins],
     components: {},
     props: {
+        field: String,
         mold: {
             type: String,
             default: () => "radio",
@@ -65,31 +66,32 @@ export default {
             type: Boolean,
             default: () => false,
         },
-        radioData: {
-            type: [Object, Array],
-            default: () => ({
-                default: "bf7ef2feb79a422dbe96a3ffb877eebe",
-                list: [
-                    {
-                        value: "bf7ef2feb79a422dbe96a3ffb877eebe",
-                        label: "GoLang",
-                    },
-                    {
-                        value: "0be59f964fa544e795d53b27fe30e4c4",
-                        label: "JavaScript",
-                    },
-                    {
-                        value: "9bba1df431f64637a0b13ad882968d43",
-                        label: "PHP",
-                    },
-                ],
-            }),
+        radioDefault: {
+            type: String,
+            default: () => "",
+        },
+        radioEnum: {
+            type: Array,
+            default: () => [
+                {
+                    value: "bf7ef2feb79a422dbe96a3ffb877eebe",
+                    label: "GoLang",
+                },
+                {
+                    value: "0be59f964fa544e795d53b27fe30e4c4",
+                    label: "JavaScript",
+                },
+                {
+                    value: "9bba1df431f64637a0b13ad882968d43",
+                    label: "PHP",
+                },
+            ],
         },
     },
     data() {
         //这里存放数据
         return {
-            radio: this.radioData.default,
+            radio: this.radioDefault,
         };
     },
     //监听属性 类似于data概念
@@ -99,7 +101,7 @@ export default {
     //方法集合
     methods: {
         radioChange(value) {
-            const target = this.radioData.list.filter(
+            const target = this.radioEnum.filter(
                 (item) => item.value === value
             );
 
@@ -107,7 +109,10 @@ export default {
                 return false;
             }
 
-            this.$emit("onChange", target[0]);
+            this.$emit("onChange", {
+                field: this.field || "default",
+                ...target[0],
+            });
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
