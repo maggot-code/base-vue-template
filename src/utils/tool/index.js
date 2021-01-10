@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 10:53:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-08 15:30:31
+ * @LastEditTime: 2021-01-10 17:08:34
  * @Description: utils tool room
  */
 import flake from '@/utils/tool/sign';
@@ -25,10 +25,19 @@ const isVNode = (node) => {
     return node !== null && typeof node === 'object' && hasOwnProperty.call(node, 'componentOptions');
 }
 
+const propsCheck = (condition, abnormal) => {
+    if (!condition) {
+        errLog(abnormal)
+    }
+
+    return condition;
+}
+
 export {
     flake,
     errLog,
     warnLog,
     regEXPUrl,
-    isVNode
+    isVNode,
+    propsCheck
 }
