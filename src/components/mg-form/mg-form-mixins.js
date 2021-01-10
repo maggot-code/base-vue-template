@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-10 16:41:10
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-10 17:01:06
+ * @LastEditTime: 2021-01-10 19:56:01
  * @Description: component mg-form-mixins
  */
 export default {
@@ -19,11 +19,7 @@ export default {
     //监控data中的数据变化
     watch: {},
     //方法集合
-    methods: {
-        propsCheck(value) {
-
-        }
-    },
+    methods: {},
     //生命周期 - 创建完成（可以访问当前this实例）
     created() { },
     //生命周期 - 挂载完成（可以访问DOM元素）
