@@ -2,12 +2,11 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-08 18:00:33
+ * @LastEditTime: 2021-01-10 18:52:33
  * @Description: test.vue
 -->
 <template>
     <div class="mg-test" ref="testEl">
-        mg-test
         <mg-radio></mg-radio>
     </div>
 </template>
@@ -40,4 +39,8 @@ export default {
     activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.mg-test {
+    width: 200px;
+}
+</style>
