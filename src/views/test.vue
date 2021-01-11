@@ -2,36 +2,37 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-10 23:57:47
+ * @LastEditTime: 2021-01-11 17:55:23
  * @Description: test.vue
 -->
 <template>
     <div class="mg-test" ref="testEl">
-        <el-button @click="submit">默认按钮</el-button>
         <!-- <mg-radio @onChange="testChenage"></mg-radio>
         <mg-input @onChange="testChenage"></mg-input>
         <mg-password @onChange="testChenage"></mg-password>
         <mg-textarea @onChange="testChenage"></mg-textarea> -->
-        <component
-            v-for="(item, field) in formProps"
-            :key="field"
-            :is="item.componentName"
-            :field="item.field"
-        ></component>
+        <mg-form :form-schema="formProps"></mg-form>
     </div>
 </template>
 
 <script>
-import { MgRadio, MgInput, MgPassword, MgTextarea } from "@/components/mg-form";
+import {
+    MgForm,
+    MgRadio,
+    MgInput,
+    MgPassword,
+    MgTextarea,
+} from "@/components/mg-form";
 export default {
     name: "mg-test",
-    components: { MgRadio, MgInput, MgPassword, MgTextarea },
+    components: { MgForm },
     data() {
         //这里存放数据
         return {
             formProps: {
                 sex: {
                     componentName: "mg-radio",
+                    label: "性别",
                     attrs: {
                         mold: "radio",
                         radioDefault: "0",
@@ -49,18 +50,21 @@ export default {
                 },
                 name: {
                     componentName: "mg-input",
+                    label: "姓名",
                     attrs: {
                         value: "111",
                     },
                 },
                 password: {
                     componentName: "mg-password",
+                    label: "密码",
                     attrs: {
                         value: "222",
                     },
                 },
                 brief: {
                     componentName: "mg-textarea",
+                    label: "简介",
                     attrs: {
                         value: "333",
                     },
