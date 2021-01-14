@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:49:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 23:05:00
+ * @LastEditTime: 2021-01-14 23:41:28
  * @Description: component mg-from -> mg-input VUE
 -->
 <template>

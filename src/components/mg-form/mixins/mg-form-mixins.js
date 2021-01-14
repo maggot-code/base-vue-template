@@ -2,11 +2,11 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 10:18:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 18:12:00
+ * @LastEditTime: 2021-01-14 23:33:44
  * @Description: component mg-form-mixins
  */
 import { cloneDeep } from 'lodash';
-const PropsList = ['field', 'value', 'tag', 'mold'];
+const PropsList = ['field', 'value', 'tag'];
 export default {
     name: 'mg-form-mixins',
     props: {
