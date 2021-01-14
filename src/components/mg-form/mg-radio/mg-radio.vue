@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 13:34:48
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 14:36:45
+ * @LastEditTime: 2021-01-14 23:43:58
  * @Description: component mg-from -> mg-radio VUE
 -->
 <template>
@@ -18,6 +18,7 @@
                 :key="cell.rid"
                 :label="cell.value"
                 :disabled="cell.disabled"
+                :border="options.border"
                 >{{ cell.label }}</el-radio
             >
         </template>
@@ -38,6 +39,7 @@
                 :key="cell.rid"
                 :label="cell.value"
                 :disabled="cell.disabled"
+                :border="options.border"
                 >{{ cell.label }}</el-radio
             >
         </template>
@@ -45,26 +47,23 @@
 </template>
 
 <script>
+import { assign, isArray } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import { checkEnum } from "@/components/mg-form/utils";
-import { isArray } from "lodash";
 export default {
     name: "mg-radio",
     mixins: [MgFormMixins],
     components: {},
     props: {
-        field: {
-            type: String,
-            default: () => "defualt",
-        },
         value: {
             type: [String, Number],
             default: () => "",
         },
-        tag: {
-            type: String,
-            default: () => "",
+
+        border: {
+            type: Boolean,
+            default: () => true,
         },
     },
     data() {
@@ -77,22 +76,25 @@ export default {
     computed: {
         options: (vm) => {
             const { mold, enumList } = vm.$attrs;
-            const def = defaultOptions[mold] || defaultOptions.default;
 
-            const enums =
-                isArray(enumList) && enumList.length > 0
-                    ? checkEnum(enumList)
-                    : [];
+            const enums = vm.checkIsEnums(enumList) ? checkEnum(enumList) : [];
+            const defOptions = defaultOptions[mold] || defaultOptions.default;
+            const protoAttrs = assign(
+                { enums: enums },
+                defOptions,
+                vm.$props,
+                vm.$attrs
+            );
 
-            return Object.assign({}, def, {
-                enums: enums,
-                mold: mold || "radio",
-                ...vm.$attrs,
-            });
+            return vm.delCommonProps(protoAttrs);
         },
     },
     //监控data中的数据变化
-    watch: {},
+    watch: {
+        value(newVal) {
+            this.radioValue = newVal;
+        },
+    },
     //方法集合
     methods: {
         keepValue(value) {
@@ -105,6 +107,9 @@ export default {
         change(value) {
             this.$emit("update:value", value);
             this.keepValue(value);
+        },
+        checkIsEnums(list) {
+            return isArray(list) && list.length > 0;
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
