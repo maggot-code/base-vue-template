@@ -2,19 +2,33 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 13:35:25
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 14:48:03
+ * @LastEditTime: 2021-01-14 16:01:48
  * @Description: component form cell install
  */
 import MgInput from "./mg-input";
 import MgRadio from './mg-radio';
 import MgCheckBox from './mg-check-box';
 import MgSwitch from './mg-switch';
+import MgSlider from './mg-slider';
+import MgRate from './mg-rate';
+import MgSelect from './mg-select';
+import MgCascader from './mg-cascader';
+import MgDate from './mg-date';
+import MgUpload from './mg-upload';
+import MgTransfer from './mg-transfer';
 
 const components = [
     MgInput,
     MgRadio,
     MgCheckBox,
-    MgSwitch
+    MgSwitch,
+    MgSlider,
+    MgRate,
+    MgSelect,
+    MgCascader,
+    MgDate,
+    MgUpload,
+    MgTransfer
 ];
 
 const install = function (Vue) {
@@ -38,7 +52,14 @@ export {
     MgInput,
     MgRadio,
     MgCheckBox,
-    MgSwitch
+    MgSwitch,
+    MgSlider,
+    MgRate,
+    MgSelect,
+    MgCascader,
+    MgDate,
+    MgUpload,
+    MgTransfer
 }
 
 export default { install };

@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 13:44:27
+ * @LastEditTime: 2021-01-14 15:51:56
  * @Description: component mg-form VUE
 -->
 <template>

@@ -192,5 +192,54 @@
         "field": "hasMoney",
         "value": true,
         "attrs": {}
+    },
+    {
+        "componentName": "mg-slider",
+        "label": "投资",
+        "field": "money",
+        "value": 0,
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-rate",
+        "label": "评价",
+        "field": "assess",
+        "value": 2,
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-select",
+        "label": "城市",
+        "field": "city",
+        "value": "",
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-cascader",
+        "label": "导航",
+        "field": "nav",
+        "value": "",
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "label": "时间选择",
+        "field": "times",
+        "value": "",
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-upload",
+        "label": "上传",
+        "field": "uploads",
+        "value": [],
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-transfer",
+        "label": "排班",
+        "field": "arrayWork",
+        "value": [],
+        "attrs": {}
     }
 ]
