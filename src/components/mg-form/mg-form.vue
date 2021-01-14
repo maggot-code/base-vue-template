@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 23:04:06
+ * @LastEditTime: 2021-01-14 23:14:32
  * @Description: component mg-form VUE
 -->
 <template>
@@ -22,13 +22,13 @@
         <template v-if="inline">
             <template v-for="(cell, field) in schema">
                 <el-form-item
-                    v-if="componentsList.indexOf(cell.componentName) >= 0"
+                    v-if="checkIsComponent(cell.componentName)"
                     :key="field"
                     :label="cell.label"
                     :prop="field"
                 >
                     <component
-                        v-bind="{ mold: cell.mold, ...(cell.attrs || {}) }"
+                        v-bind="setupAttrs(cell)"
                         :is="cell.componentName"
                         :field="field"
                         :value.sync="formData[field]"
@@ -43,16 +43,13 @@
             <el-row :gutter="20">
                 <template v-for="(cell, field) in schema">
                     <el-col
-                        v-if="componentsList.indexOf(cell.componentName) >= 0"
+                        v-if="checkIsComponent(cell.componentName)"
                         :key="field"
-                        :span="cell.col || 24"
+                        :span="setColSpan(cell.col)"
                     >
                         <el-form-item :label="cell.label" :prop="field">
                             <component
-                                v-bind="{
-                                    mold: cell.mold,
-                                    ...(cell.attrs || {}),
-                                }"
+                                v-bind="setupAttrs(cell)"
                                 :field="field"
                                 :value.sync="formData[field]"
                                 :tag="cell.tag"
@@ -65,11 +62,16 @@
             </el-row>
         </template>
 
-        <el-form-item v-if="Object.keys(schema).length > 0">
-            <el-button type="primary" @click="submitForm(formRef)"
+        <el-form-item v-if="isButton">
+            <el-button
+                v-if="submitButton"
+                type="primary"
+                @click="submitForm(formRef)"
                 >立即创建</el-button
             >
-            <el-button @click="resetForm(formRef)">重置</el-button>
+            <el-button v-if="resetButton" @click="resetForm(formRef)"
+                >重置</el-button
+            >
         </el-form-item>
     </el-form>
 </template>
@@ -127,7 +129,9 @@ export default {
         };
     },
     //监听属性 类似于data概念
-    computed: {},
+    computed: {
+        isButton: (vm) => Object.keys(vm.schema).length > 0,
+    },
     //监控data中的数据变化
     watch: {
         schema: {
@@ -151,6 +155,9 @@ export default {
     },
     //方法集合
     methods: {
+        keepValue(targeter) {
+            const { tag, field, value } = targeter;
+        },
         submitForm(ref) {
             if (!isUndefined(this.handlerSubmit)) {
                 this.handlerSubmit(ref);
@@ -176,9 +183,6 @@ export default {
             this.formData = cloneDeep(this.copyFormData);
             this.$refs[ref].clearValidate();
         },
-        keepValue(targeter) {
-            const { tag, field, value } = targeter;
-        },
         filterRules(rules) {
             return rules.map((item) => {
                 if (item.validator && FormValidator[item.validator]) {
@@ -186,6 +190,20 @@ export default {
                 }
                 return item;
             });
+        },
+        checkIsComponent(componentName) {
+            return this.componentsList.indexOf(componentName) >= 0;
+        },
+        setupAttrs(cell) {
+            const { mold, attrs } = cell;
+
+            return {
+                mold: mold,
+                ...(attrs || {}),
+            };
+        },
+        setColSpan(col) {
+            return col || 24;
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
