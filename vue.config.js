@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2020-12-22 22:26:52
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-07 12:35:11
+ * @LastEditTime: 2021-01-12 09:19:40
  * @Description: vue config options
  */
 const resolves = dir => require('path').join(__dirname, dir);
@@ -15,7 +15,7 @@ const pluginList = [
     new CompressionWebpackPlugin({
         filename: info => `${info.path}.gz${info.query}`,
         algorithm: 'gzip',
-        threshold: 10240, // 只有大小大于该值的资源会被处理 10240
+        threshold: 10240 * 10, // 只有大小大于该值的资源会被处理 10240
         test: new RegExp('\\.(' + ['js', 'css', 'json'].join('|') + ')$'),
         minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
         deleteOriginalAssets: false // 删除原文件
@@ -55,21 +55,21 @@ module.exports = {
         config.plugins.delete('prefetch');
         // 移除 preload 插件，避免加载多余的资源
         config.plugins.delete('preload');
-        config.optimization.minimize(true);
-        config.optimization.splitChunks({ chunks: 'all' });
+        // config.optimization.minimize(true);
+        // config.optimization.splitChunks({ chunks: 'all' });
     },
     configureWebpack: config => {
         // 调试JS
         if (process.env.NODE_ENV === 'development') {
             config.devtool = 'source-map';
-            config["performance"] = {//打包文件大小配置
-                "maxEntrypointSize": 10240 * 100,
-                "maxAssetSize": 10240 * 100
-            };
         } else {
             pluginList.push(new BundleAnalyzerPlugin());
         }
-        config.mode = 'production';
+        //打包文件大小配置
+        config.performance = {
+            "maxEntrypointSize": 10240 * 100,
+            "maxAssetSize": 10240 * 100
+        }
         // 公共代码抽离
         config.optimization = {
             // 分割代码块
@@ -78,20 +78,20 @@ module.exports = {
                     //公用模块抽离
                     common: {
                         chunks: 'initial',
-                        minSize: 0, //大于0个字节
+                        minSize: 10240 * 10, //大于0个字节
                         minChunks: 2, //抽离公共代码时，这个代码块最小被引用的次数
                     },
-                    //第三方库抽离
                     vendor: {
                         priority: 1, //权重
                         test: /node_modules/,
                         chunks: 'initial',
-                        minSize: 0, //大于0个字节
+                        minSize: 10240 * 10, //大于0个字节
                         minChunks: 2, //在分割之前，这个代码块最小应该被引用的次数
-                    },
+                    }
                 },
             }
         };
         config.plugins.push(...pluginList);
+        config.mode = process.env.NODE_ENV;
     },
 }

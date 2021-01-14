@@ -1,9 +1,9 @@
 /*
  * @Author: maggot-code
- * @Date: 2021-01-08 17:54:38
+ * @Date: 2021-01-14 13:33:59
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-08 17:57:50
- * @Description: component mg-form -> mg-radio install
+ * @LastEditTime: 2021-01-14 13:34:34
+ * @Description: export component mg-radio
  */
 import MgRadio from './mg-radio';
 

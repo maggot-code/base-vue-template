@@ -1,47 +1,47 @@
 <!--
  * @Author: maggot-code
- * @Date: 2021-01-14 13:34:48
+ * @Date: 2021-01-14 14:23:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 14:36:45
- * @Description: component mg-from -> mg-radio VUE
+ * @LastEditTime: 2021-01-14 14:40:09
+ * @Description: component mg-from -> mg-check-box VUE
 -->
 <template>
-    <el-radio-group
-        class="mg-radio"
+    <el-checkbox-group
+        class="mg-check-box"
         v-model="radioValue"
         v-bind="options"
         @change="change"
     >
         <template v-if="options.mold === 'radio'">
-            <el-radio
+            <el-checkbox
                 v-for="cell in options.enums"
                 :key="cell.rid"
                 :label="cell.value"
                 :disabled="cell.disabled"
-                >{{ cell.label }}</el-radio
+                >{{ cell.label }}</el-checkbox
             >
         </template>
 
         <template v-else-if="options.mold === 'button'">
-            <el-radio-button
+            <el-checkbox-button
                 v-for="cell in options.enums"
                 :key="cell.rid"
                 :label="cell.value"
                 :disabled="cell.disabled"
-                >{{ cell.label }}</el-radio-button
+                >{{ cell.label }}</el-checkbox-button
             >
         </template>
 
         <template v-else>
-            <el-radio
+            <el-checkbox
                 v-for="cell in options.enums"
                 :key="cell.rid"
                 :label="cell.value"
                 :disabled="cell.disabled"
-                >{{ cell.label }}</el-radio
+                >{{ cell.label }}</el-checkbox
             >
         </template>
-    </el-radio-group>
+    </el-checkbox-group>
 </template>
 
 <script>
@@ -50,7 +50,7 @@ import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import { checkEnum } from "@/components/mg-form/utils";
 import { isArray } from "lodash";
 export default {
-    name: "mg-radio",
+    name: "mg-check-box",
     mixins: [MgFormMixins],
     components: {},
     props: {
@@ -59,8 +59,8 @@ export default {
             default: () => "defualt",
         },
         value: {
-            type: [String, Number],
-            default: () => "",
+            type: Array,
+            default: () => [],
         },
         tag: {
             type: String,

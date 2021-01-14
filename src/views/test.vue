@@ -2,74 +2,28 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-11 17:55:23
+ * @LastEditTime: 2021-01-14 11:01:28
  * @Description: test.vue
 -->
 <template>
     <div class="mg-test" ref="testEl">
-        <!-- <mg-radio @onChange="testChenage"></mg-radio>
-        <mg-input @onChange="testChenage"></mg-input>
-        <mg-password @onChange="testChenage"></mg-password>
-        <mg-textarea @onChange="testChenage"></mg-textarea> -->
-        <mg-form :form-schema="formProps"></mg-form>
+        <mg-form :schema="formSchema"></mg-form>
     </div>
 </template>
 
 <script>
-import {
-    MgForm,
-    MgRadio,
-    MgInput,
-    MgPassword,
-    MgTextarea,
-} from "@/components/mg-form";
+import schemaJSON from "@/components/mg-form/schema";
+import MgForm from "@/components/mg-form";
+import { objectRepeat } from "@/utils/tool";
 export default {
     name: "mg-test",
-    components: { MgForm },
+    components: {
+        MgForm,
+    },
     data() {
         //这里存放数据
         return {
-            formProps: {
-                sex: {
-                    componentName: "mg-radio",
-                    label: "性别",
-                    attrs: {
-                        mold: "radio",
-                        radioDefault: "0",
-                        radioEnum: [
-                            {
-                                value: "0",
-                                label: "女",
-                            },
-                            {
-                                value: "1",
-                                label: "男",
-                            },
-                        ],
-                    },
-                },
-                name: {
-                    componentName: "mg-input",
-                    label: "姓名",
-                    attrs: {
-                        value: "111",
-                    },
-                },
-                password: {
-                    componentName: "mg-password",
-                    label: "密码",
-                    attrs: {
-                        value: "222",
-                    },
-                },
-                brief: {
-                    componentName: "mg-textarea",
-                    label: "简介",
-                    attrs: {
-                        value: "333",
-                    },
-                },
-            },
+            formSchema: {},
         };
     },
     //监听属性 类似于data概念
@@ -77,14 +31,14 @@ export default {
     //监控data中的数据变化
     watch: {},
     //方法集合
-    methods: {
-        submit() {},
-        testChenage(val) {
-            console.log(val);
-        },
-    },
+    methods: {},
     //生命周期 - 创建完成（可以访问当前this实例）
-    created() {},
+    created() {
+        schemaJSON.forEach((cell) => {
+            objectRepeat(schemaJSON, this.formSchema, cell.field) &&
+                this.$set(this.formSchema, cell.field, cell);
+        });
+    },
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {},
     beforeCreate() {}, //生命周期 - 创建之前

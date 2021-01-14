@@ -1,9 +1,9 @@
 /*
  * @Author: maggot-code
- * @Date: 2021-01-10 19:00:09
+ * @Date: 2021-01-13 16:49:04
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-10 19:00:46
- * @Description: component mg-form -> mg-input install
+ * @LastEditTime: 2021-01-13 16:50:48
+ * @Description: export component mg-input
  */
 import MgInput from './mg-input';
 

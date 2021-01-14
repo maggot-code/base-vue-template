@@ -1,0 +1,24 @@
+{
+    "default": {
+        "placeholder": "请输入内容",
+        "clearable": true
+    },
+    "text": {
+        "placeholder": "请输入内容",
+        "clearable": true
+    },
+    "password": {
+        "placeholder": "请输入密码",
+        "clearable": true,
+        "show-password": true
+    },
+    "textarea": {
+        "type": "textarea",
+        "placeholder": "请输入文本内容",
+        "clearable": true,
+        "autosize": {
+            "minRows": 3,
+            "maxRows": 5
+        }
+    }
+}

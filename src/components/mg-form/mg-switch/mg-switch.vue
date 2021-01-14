@@ -1,24 +1,25 @@
 <!--
  * @Author: maggot-code
- * @Date: 2021-01-13 16:49:09
+ * @Date: 2021-01-14 14:44:28
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 13:49:27
- * @Description: component mg-from -> mg-input VUE
+ * @LastEditTime: 2021-01-14 14:50:23
+ * @Description: component mg-from -> mg-switch VUE
 -->
 <template>
-    <el-input
-        class="mg-input"
-        v-model="inputValue"
+    <el-switch
+        class="mg-switch"
+        v-model="switchValue"
         v-bind="options"
-        @input="input"
-    ></el-input>
+        @change="change"
+    >
+    </el-switch>
 </template>
 
 <script>
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 export default {
-    name: "mg-input",
+    name: "mg-switch",
     mixins: [MgFormMixins],
     components: {},
     props: {
@@ -27,8 +28,8 @@ export default {
             default: () => "defualt",
         },
         value: {
-            type: [String, Number],
-            default: () => "",
+            type: [Boolean, Number],
+            default: () => false,
         },
         tag: {
             type: String,
@@ -38,7 +39,7 @@ export default {
     data() {
         //这里存放数据
         return {
-            inputValue: this.value,
+            switchValue: this.value,
         };
     },
     //监听属性 类似于data概念
@@ -60,7 +61,7 @@ export default {
                 value: value,
             });
         },
-        input(value) {
+        change(value) {
             this.$emit("update:value", value);
             this.keepValue(value);
         },
