@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 16:09:32
+ * @LastEditTime: 2021-01-14 23:21:00
  * @Description: test.vue
 -->
 <template>
@@ -12,9 +12,11 @@
 </template>
 
 <script>
-import schemaJSON from "@/components/mg-form/test-schema";
-import MgForm from "@/components/mg-form";
+// import schemaJSON from "@/components/mg-form/test/schema";
+// import schemaJSON from "@/components/mg-form/test/input-schema";
+import schemaJSON from "@/components/mg-form/test/radio-schema";
 import { objectRepeat } from "@/utils/tool";
+import MgForm from "@/components/mg-form";
 export default {
     name: "mg-test",
     components: {
@@ -53,6 +55,6 @@ export default {
 <style lang='scss' scoped>
 .mg-test {
     width: 80%;
-    margin: 0 auto;
+    margin: 50px auto 0;
 }
 </style>
