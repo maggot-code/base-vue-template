@@ -1,21 +1,29 @@
 {
     "default": {
-        "placeholder": "请输入内容",
-        "clearable": true
-    },
-    "text": {
-        "placeholder": "请输入内容",
-        "clearable": true
+        "prefix-icon": "el-icon-edit"
     },
     "password": {
         "placeholder": "请输入密码",
-        "clearable": true,
-        "show-password": true
+        "show-password": true,
+        "prefix-icon": "el-icon-lock"
+    },
+    "tel": {
+        "placeholder": "请输入电话",
+        "prefix-icon": "el-icon-phone"
+    },
+    "email": {
+        "placeholder": "请输入邮箱",
+        "prefix-icon": "el-icon-message"
+    },
+    "url": {
+        "placeholder": "请输入网址",
+        "prefix-icon": "el-icon-link"
     },
     "textarea": {
         "type": "textarea",
         "placeholder": "请输入文本内容",
-        "clearable": true,
+        "show-word-limit": true,
+        "maxlength": 200,
         "autosize": {
             "minRows": 3,
             "maxRows": 5

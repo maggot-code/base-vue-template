@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 11:01:28
+ * @LastEditTime: 2021-01-14 16:09:32
  * @Description: test.vue
 -->
 <template>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import schemaJSON from "@/components/mg-form/schema";
+import schemaJSON from "@/components/mg-form/test-schema";
 import MgForm from "@/components/mg-form";
 import { objectRepeat } from "@/utils/tool";
 export default {

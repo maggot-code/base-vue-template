@@ -2,76 +2,92 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 15:51:56
+ * @LastEditTime: 2021-01-14 18:21:32
  * @Description: component mg-form VUE
 -->
 <template>
     <el-form
         class="mg-form"
-        label-width="80px"
-        ref="formData"
-        :status-icon="true"
+        label-position="left"
+        label-suffix="："
+        :ref="formRef"
+        :size="formSize"
         :inline="inline"
+        :disabled="disabled"
+        :label-width="labelWidth"
         :model="formData"
         :rules="formRules"
+        :status-icon="false"
     >
         <template v-if="inline">
-            <el-form-item
-                v-for="(cell, field) in schema"
-                :key="field"
-                :label="cell.label"
-                :prop="field"
-            >
-                <component
-                    v-bind="{ mold: cell.mold, ...cell.attrs }"
-                    :is="cell.componentName"
-                    :field="field"
-                    :value.sync="formData[field]"
-                    :tag="cell.tag"
-                    @keepValue="keepValue"
-                ></component>
-            </el-form-item>
+            <template v-for="(cell, field) in schema">
+                <el-form-item
+                    v-if="componentsList.indexOf(cell.componentName) >= 0"
+                    :key="field"
+                    :label="cell.label"
+                    :prop="field"
+                >
+                    <component
+                        v-bind="{ mold: cell.mold, ...(cell.attrs || {}) }"
+                        :is="cell.componentName"
+                        :field="field"
+                        :value.sync="formData[field]"
+                        :tag="cell.tag"
+                        @keepValue="keepValue"
+                    ></component>
+                </el-form-item>
+            </template>
         </template>
 
         <template v-else>
             <el-row :gutter="20">
-                <el-col
-                    v-for="(cell, field) in schema"
-                    :key="field"
-                    :span="cell.col || 24"
-                >
-                    <el-form-item :label="cell.label" :prop="field">
-                        <component
-                            v-bind="{ mold: cell.mold, ...cell.attrs }"
-                            :is="cell.componentName"
-                            :field="field"
-                            :value.sync="formData[field]"
-                            :tag="cell.tag"
-                            @keepValue="keepValue"
-                        ></component>
-                    </el-form-item>
-                </el-col>
+                <template v-for="(cell, field) in schema">
+                    <el-col
+                        v-if="componentsList.indexOf(cell.componentName) >= 0"
+                        :key="field"
+                        :span="cell.col || 24"
+                    >
+                        <el-form-item :label="cell.label" :prop="field">
+                            <component
+                                v-bind="{
+                                    mold: cell.mold,
+                                    ...(cell.attrs || {}),
+                                }"
+                                :field="field"
+                                :value.sync="formData[field]"
+                                :tag="cell.tag"
+                                :is="cell.componentName"
+                                @keepValue="keepValue"
+                            ></component>
+                        </el-form-item>
+                    </el-col>
+                </template>
             </el-row>
         </template>
 
-        <el-form-item>
-            <el-button type="primary" @click="submitForm('formData')"
+        <el-form-item v-if="Object.keys(schema).length > 0">
+            <el-button type="primary" @click="submitForm(formRef)"
                 >立即创建</el-button
             >
-            <el-button>重置</el-button>
+            <el-button @click="resetForm(formRef)">重置</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script>
+import { cloneDeep, compact, isUndefined } from "lodash";
+import { flake } from "@/utils/tool";
 import { FormCellComponent } from "./install";
-import { compact } from "lodash";
 import * as FormValidator from "./validator";
 export default {
     name: "mg-form",
     mixins: [],
     components: { ...FormCellComponent },
     props: {
+        formRef: {
+            type: [String, Number],
+            default: () => flake.gen(),
+        },
         schema: {
             type: Object,
             required: true,
@@ -80,13 +96,34 @@ export default {
             type: Boolean,
             default: () => false,
         },
+        disabled: {
+            type: Boolean,
+            default: () => false,
+        },
+        labelWidth: {
+            type: String,
+            default: () => "80px",
+        },
+        submitButton: {
+            type: Boolean,
+            default: () => true,
+        },
+        resetButton: {
+            type: Boolean,
+            default: () => true,
+        },
+        handlerSubmit: Function,
+        handlerReset: Function,
     },
     data() {
         //这里存放数据
         return {
-            formLoad: false,
+            componentsList: [],
+            // medium / small / mini
+            formSize: "medium",
             formData: {},
             formRules: {},
+            copyFormData: {},
         };
     },
     //监听属性 类似于data概念
@@ -105,7 +142,8 @@ export default {
                         );
                     }
                 }
-                this.formLoad = true;
+
+                this.copyFormData = cloneDeep(this.formData);
             },
             immediate: true,
             deep: true,
@@ -113,19 +151,32 @@ export default {
     },
     //方法集合
     methods: {
+        submitForm(ref) {
+            if (!isUndefined(this.handlerSubmit)) {
+                this.handlerSubmit(ref);
+                return false;
+            }
+
+            this.$refs[ref]
+                .validate()
+                .then((success) => {
+                    console.log(success);
+                    console.log(this.formData);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        resetForm(ref) {
+            if (!isUndefined(this.handlerReset)) {
+                this.handlerReset(ref);
+                return false;
+            }
+
+            this.$refs[ref].clearValidate();
+        },
         keepValue(targeter) {
             const { tag, field, value } = targeter;
-        },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    console.log("submit!!");
-                    console.log(this[formName]);
-                } else {
-                    console.log("error submit!!");
-                    return false;
-                }
-            });
         },
         filterRules(rules) {
             return rules.map((item) => {
@@ -137,14 +188,20 @@ export default {
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
-    created() {},
+    created() {
+        this.componentsList = Object.keys(FormCellComponent).map(
+            (keys) => FormCellComponent[keys].name
+        );
+    },
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {},
     beforeCreate() {}, //生命周期 - 创建之前
     beforeMount() {}, //生命周期 - 挂载之前
     beforeUpdate() {}, //生命周期 - 更新之前
     updated() {}, //生命周期 - 更新之后
-    beforeDestroy() {}, //生命周期 - 销毁之前
+    beforeDestroy() {
+        this.formData = this.formRules = this.copyFormData = {};
+    }, //生命周期 - 销毁之前
     destroyed() {}, //生命周期 - 销毁完成
     activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
