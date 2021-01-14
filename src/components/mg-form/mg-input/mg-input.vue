@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:49:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 18:13:11
+ * @LastEditTime: 2021-01-14 23:05:00
  * @Description: component mg-from -> mg-input VUE
 -->
 <template>
@@ -67,7 +67,11 @@ export default {
         },
     },
     //监控data中的数据变化
-    watch: {},
+    watch: {
+        value(newVal) {
+            this.inputValue = newVal;
+        },
+    },
     //方法集合
     methods: {
         keepValue(value) {
