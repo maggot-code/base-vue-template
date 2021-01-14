@@ -2,13 +2,13 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 18:21:32
+ * @LastEditTime: 2021-01-14 23:04:06
  * @Description: component mg-form VUE
 -->
 <template>
     <el-form
         class="mg-form"
-        label-position="left"
+        label-position="right"
         label-suffix="："
         :ref="formRef"
         :size="formSize"
@@ -173,6 +173,7 @@ export default {
                 return false;
             }
 
+            this.formData = cloneDeep(this.copyFormData);
             this.$refs[ref].clearValidate();
         },
         keepValue(targeter) {
