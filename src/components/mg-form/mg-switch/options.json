@@ -1,3 +1,9 @@
 {
-    "default": {}
+    "default": {
+        "width": 40,
+        "active-value": true,
+        "inactive-value": false,
+        "active-color": "#67C23A",
+        "inactive-color": "#909399"
+    }
 }

@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 23:14:32
+ * @LastEditTime: 2021-01-15 09:55:26
  * @Description: component mg-form VUE
 -->
 <template>
@@ -104,7 +104,7 @@ export default {
         },
         labelWidth: {
             type: String,
-            default: () => "80px",
+            default: () => "120px",
         },
         submitButton: {
             type: Boolean,

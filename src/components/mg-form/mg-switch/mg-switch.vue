@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:44:28
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 14:50:23
+ * @LastEditTime: 2021-01-15 10:10:57
  * @Description: component mg-from -> mg-switch VUE
 -->
 <template>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { assign } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 export default {
@@ -23,17 +24,9 @@ export default {
     mixins: [MgFormMixins],
     components: {},
     props: {
-        field: {
-            type: String,
-            default: () => "defualt",
-        },
         value: {
-            type: [Boolean, Number],
+            type: [Boolean, String, Number],
             default: () => false,
-        },
-        tag: {
-            type: String,
-            default: () => "",
         },
     },
     data() {
@@ -46,12 +39,19 @@ export default {
     computed: {
         options: (vm) => {
             const { mold } = vm.$attrs;
-            const def = defaultOptions[mold] || defaultOptions.default;
-            return Object.assign({}, def, vm.$attrs);
+
+            const defOptions = defaultOptions[mold] || defaultOptions.default;
+            const protoAttrs = assign({}, defOptions, vm.$props, vm.$attrs);
+
+            return vm.delCommonProps(protoAttrs);
         },
     },
     //监控data中的数据变化
-    watch: {},
+    watch: {
+        value(newVal) {
+            this.switchValue = newVal;
+        },
+    },
     //方法集合
     methods: {
         keepValue(value) {
