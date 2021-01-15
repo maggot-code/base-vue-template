@@ -1,3 +1,5 @@
 {
-    "default": {}
+    "default": {
+        "show-input": true
+    }
 }

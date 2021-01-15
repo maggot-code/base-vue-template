@@ -2,18 +2,20 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:13:21
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 15:24:21
+ * @LastEditTime: 2021-01-15 10:40:55
  * @Description: component mg-from -> mg-slider VUE
 -->
 <template>
     <el-slider
         class="mg-slider"
         v-model="sliderValue"
+        v-bind="options"
         @input="input"
     ></el-slider>
 </template>
 
 <script>
+import { assign } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 export default {
@@ -21,17 +23,9 @@ export default {
     mixins: [MgFormMixins],
     components: {},
     props: {
-        field: {
-            type: String,
-            default: () => "defualt",
-        },
         value: {
-            type: [Number, String],
+            type: [Number, String, Array],
             default: () => 0,
-        },
-        tag: {
-            type: String,
-            default: () => "",
         },
     },
     data() {
@@ -41,9 +35,22 @@ export default {
         };
     },
     //监听属性 类似于data概念
-    computed: {},
+    computed: {
+        options: (vm) => {
+            const { mold } = vm.$attrs;
+
+            const defOptions = defaultOptions[mold] || defaultOptions.default;
+            const protoAttrs = assign({}, defOptions, vm.$props, vm.$attrs);
+
+            return vm.delCommonProps(protoAttrs);
+        },
+    },
     //监控data中的数据变化
-    watch: {},
+    watch: {
+        value(newVal) {
+            this.sliderValue = newVal;
+        },
+    },
     //方法集合
     methods: {
         keepValue(value) {
