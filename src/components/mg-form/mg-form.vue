@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 09:55:26
+ * @LastEditTime: 2021-01-15 16:08:00
  * @Description: component mg-form VUE
 -->
 <template>
@@ -29,10 +29,10 @@
                 >
                     <component
                         v-bind="setupAttrs(cell)"
-                        :is="cell.componentName"
                         :field="field"
                         :value.sync="formData[field]"
                         :tag="cell.tag"
+                        :is="cell.componentName"
                         @keepValue="keepValue"
                     ></component>
                 </el-form-item>
@@ -134,15 +134,23 @@ export default {
     },
     //监控data中的数据变化
     watch: {
+        "formData.city": {
+            handler(newVal) {
+                // console.log(newVal);
+            },
+            deep: true,
+        },
         schema: {
             handler(schema) {
-                for (const keys in schema) {
-                    this.$set(this.formData, keys, schema[keys].value);
-                    if (schema[keys].rules) {
+                const copySchema = cloneDeep(schema);
+                console.log(copySchema);
+                for (const keys in copySchema) {
+                    this.$set(this.formData, keys, copySchema[keys].value);
+                    if (copySchema[keys].rules) {
                         this.$set(
                             this.formRules,
                             keys,
-                            this.filterRules(schema[keys].rules)
+                            this.filterRules(copySchema[keys].rules)
                         );
                     }
                 }
@@ -183,6 +191,11 @@ export default {
             this.formData = cloneDeep(this.copyFormData);
             this.$refs[ref].clearValidate();
         },
+        /**
+         * @description: 过滤验证规则，检查是否存在validator，如果存在则替换验证器
+         * @param {Array} rules 验证规则列表
+         * @return {Array} 返回新的验证规则列表
+         */
         filterRules(rules) {
             return rules.map((item) => {
                 if (item.validator && FormValidator[item.validator]) {
@@ -191,9 +204,19 @@ export default {
                 return item;
             });
         },
+        /**
+         * @description: 检查组件是否被正确注册了
+         * @param {String} componentName 组件名称
+         * @return {Boolean} 是否被注册
+         */
         checkIsComponent(componentName) {
             return this.componentsList.indexOf(componentName) >= 0;
         },
+        /**
+         * @description: 设置attrs属性
+         * @param {Object} cell
+         * @return {Object} 返回新的attrs属性
+         */
         setupAttrs(cell) {
             const { mold, attrs } = cell;
 
@@ -202,6 +225,11 @@ export default {
                 ...(attrs || {}),
             };
         },
+        /**
+         * @description: 设置col间距属性
+         * @param {Number,String} col
+         * @return {Number,String} 返回存在的值或者默认值24
+         */
         setColSpan(col) {
             return col || 24;
         },

@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 10:09:22
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 15:42:59
+ * @LastEditTime: 2021-01-15 11:14:15
  * @Description: element ui plugins
  */
 import Vue from 'vue';
@@ -24,6 +24,8 @@ import {
     Slider,
     Rate,
     Select,
+    Option,
+    OptionGroup,
     Cascader,
     CascaderPanel,
     Form,
@@ -51,6 +53,8 @@ Vue.use(Input);
 Vue.use(Slider);
 Vue.use(Rate);
 Vue.use(Select);
+Vue.use(Option);
+Vue.use(OptionGroup);
 Vue.use(Cascader);
 Vue.use(CascaderPanel);
 Vue.use(Form);

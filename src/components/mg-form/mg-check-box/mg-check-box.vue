@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:23:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 09:51:48
+ * @LastEditTime: 2021-01-15 16:43:56
  * @Description: component mg-from -> mg-check-box VUE
 -->
 <template>

@@ -2,10 +2,10 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 10:18:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 23:33:44
+ * @LastEditTime: 2021-01-15 17:08:04
  * @Description: component mg-form-mixins
  */
-import { cloneDeep } from 'lodash';
+import { cloneDeep, concat } from 'lodash';
 const PropsList = ['field', 'value', 'tag'];
 export default {
     name: 'mg-form-mixins',
@@ -24,10 +24,10 @@ export default {
         },
     },
     methods: {
-        delCommonProps(protoAttrs) {
+        delCommonProps(protoAttrs, fieldList = PropsList) {
             const copyProtoAttrs = cloneDeep(protoAttrs);
             for (const keys in copyProtoAttrs) {
-                PropsList.forEach(target => {
+                concat(fieldList, PropsList).forEach(target => {
                     if (target === keys) {
                         delete copyProtoAttrs[keys]
                     }

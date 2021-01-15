@@ -2,40 +2,77 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:32:51
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 15:40:20
+ * @LastEditTime: 2021-01-15 17:30:05
  * @Description: component mg-from -> mg-select VUE
 -->
 <template>
-    <el-select class="mg-select" v-model="selectValue" @change="change">
-        <!-- <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-        >
-        </el-option> -->
+    <el-select
+        class="mg-select"
+        v-model="selectValue"
+        v-bind="options"
+        :multiple="setupMultiple"
+        :collapse-tags="setupCollapseTags"
+        @change="change"
+    >
+        <template v-if="options.mold === 'group'">
+            <el-option-group
+                v-for="group in options.enums"
+                :key="group.rid"
+                :label="group.label"
+                :disabled="group.disabled"
+            >
+                <el-option
+                    v-for="item in group.options"
+                    :key="item.rid"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                ></el-option>
+            </el-option-group>
+        </template>
+
+        <template v-else>
+            <el-option
+                v-for="item in options.enums"
+                :key="item.rid"
+                :label="item.label"
+                :value="item.value"
+                :disabled="item.disabled"
+            ></el-option>
+        </template>
     </el-select>
 </template>
 
 <script>
+import { has, assign, isArray } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
+import { checkEnumGroup, checkEnum } from "@/components/mg-form/utils";
 export default {
     name: "mg-select",
     mixins: [MgFormMixins],
     components: {},
     props: {
-        field: {
-            type: String,
-            default: () => "defualt",
-        },
         value: {
-            type: [String, Number, Object, Array],
+            type: [String, Number, Array],
             default: () => "",
         },
-        tag: {
+
+        multiple: {
+            type: Boolean,
+            default: () => false,
+        },
+        filterable: {
+            type: Boolean,
+            default: () => true,
+        },
+        clearable: {
+            type: Boolean,
+            default: () => true,
+        },
+        placeholder: {
             type: String,
-            default: () => "",
+            default: () => "请选择内容",
         },
     },
     data() {
@@ -45,9 +82,39 @@ export default {
         };
     },
     //监听属性 类似于data概念
-    computed: {},
+    computed: {
+        setupMultiple: (vm) =>
+            isArray(vm.value) ? true : vm.multiple ? false : false,
+        setupCollapseTags: (vm) => vm.setupMultiple,
+
+        options: (vm) => {
+            const { mold, enumList } = vm.$attrs;
+            const enumCheckFunc = mold === "group" ? checkEnumGroup : checkEnum;
+
+            const enums = vm.checkIsEnums(enumList)
+                ? enumCheckFunc(enumList)
+                : [];
+            const defOptions = defaultOptions[mold] || defaultOptions.default;
+            const protoAttrs = assign(
+                { enums: enums },
+                defOptions,
+                vm.$props,
+                vm.$attrs
+            );
+
+            return vm.delCommonProps(protoAttrs, [
+                "enumList",
+                "multiple",
+                "collapse-tags",
+            ]);
+        },
+    },
     //监控data中的数据变化
-    watch: {},
+    watch: {
+        value(newVal) {
+            this.selectValue = newVal;
+        },
+    },
     //方法集合
     methods: {
         keepValue(value) {
@@ -60,6 +127,9 @@ export default {
         change(value) {
             this.$emit("update:value", value);
             this.keepValue(value);
+        },
+        checkIsEnums(list) {
+            return isArray(list) && list.length > 0;
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）

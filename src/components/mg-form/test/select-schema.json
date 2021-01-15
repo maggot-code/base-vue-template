@@ -1,0 +1,88 @@
+[
+    {
+        "componentName": "mg-select",
+        "label": "食品",
+        "field": "food",
+        "value": [],
+        "attrs": {
+            "placeholder": "请选择食品",
+            "enumList": [
+                {
+                    "label": "米饭",
+                    "value": "0"
+                },
+                {
+                    "label": "面条",
+                    "value": "1"
+                },
+                {
+                    "label": "馒头",
+                    "value": "2"
+                }
+            ]
+        }
+    },
+    {
+        "componentName": "mg-select",
+        "mold": "group",
+        "label": "城市",
+        "field": "city",
+        "value": "1002",
+        "attrs": {
+            "placeholder": "请选择所在城市",
+            "enumList": [
+                {
+                    "label": "北京",
+                    "options": [
+                        {
+                            "label": "东城区",
+                            "value": "1001"
+                        },
+                        {
+                            "label": "西城区",
+                            "value": "1002"
+                        },
+                        {
+                            "label": "朝阳区",
+                            "value": "1003"
+                        }
+                    ]
+                },
+                {
+                    "label": "河北",
+                    "options": [
+                        {
+                            "label": "石家庄市",
+                            "value": "2001"
+                        },
+                        {
+                            "label": "唐山市",
+                            "value": "2002"
+                        },
+                        {
+                            "label": "定州市",
+                            "value": "2003"
+                        }
+                    ]
+                },
+                {
+                    "label": "东北",
+                    "options": [
+                        {
+                            "label": "吉林市",
+                            "value": "3001"
+                        },
+                        {
+                            "label": "长春市",
+                            "value": "3002"
+                        },
+                        {
+                            "label": "大连市",
+                            "value": "3003"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]

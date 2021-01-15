@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 13:34:48
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 09:25:46
+ * @LastEditTime: 2021-01-15 16:44:13
  * @Description: component mg-from -> mg-radio VUE
 -->
 <template>
