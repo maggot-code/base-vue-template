@@ -1,5 +1,6 @@
 {
-    "default": {},
-    "radio": {},
-    "button": {}
+    "default": {
+        "text-color": "#fff",
+        "fill": "#409EFF"
+    }
 }

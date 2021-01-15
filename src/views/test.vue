@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 23:41:39
+ * @LastEditTime: 2021-01-15 09:13:22
  * @Description: test.vue
 -->
 <template>
@@ -14,7 +14,8 @@
 <script>
 // import schemaJSON from "@/components/mg-form/test/schema";
 // import schemaJSON from "@/components/mg-form/test/input-schema";
-import schemaJSON from "@/components/mg-form/test/radio-schema";
+// import schemaJSON from "@/components/mg-form/test/radio-schema";
+import schemaJSON from "@/components/mg-form/test/check-box-schema";
 import { objectRepeat } from "@/utils/tool";
 import MgForm from "@/components/mg-form";
 export default {
