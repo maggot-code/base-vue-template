@@ -2,14 +2,20 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:26:04
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 15:31:18
+ * @LastEditTime: 2021-01-15 10:49:13
  * @Description: component mg-from -> mg-rate VUE
 -->
 <template>
-    <el-rate class="mg-rate" v-model="rateValue" @change="change"></el-rate>
+    <el-rate
+        class="mg-rate"
+        v-model="rateValue"
+        v-bind="options"
+        @change="change"
+    ></el-rate>
 </template>
 
 <script>
+import { assign } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 export default {
@@ -17,17 +23,9 @@ export default {
     mixins: [MgFormMixins],
     components: {},
     props: {
-        field: {
-            type: String,
-            default: () => "defualt",
-        },
         value: {
-            type: [Number, Object],
-            default: () => null,
-        },
-        tag: {
-            type: String,
-            default: () => "",
+            type: Number,
+            default: () => 0,
         },
     },
     data() {
@@ -37,9 +35,22 @@ export default {
         };
     },
     //监听属性 类似于data概念
-    computed: {},
+    computed: {
+        options: (vm) => {
+            const { mold } = vm.$attrs;
+
+            const defOptions = defaultOptions[mold] || defaultOptions.default;
+            const protoAttrs = assign({}, defOptions, vm.$props, vm.$attrs);
+
+            return vm.delCommonProps(protoAttrs);
+        },
+    },
     //监控data中的数据变化
-    watch: {},
+    watch: {
+        value(newVal) {
+            this.rateValue = newVal;
+        },
+    },
     //方法集合
     methods: {
         keepValue(value) {
