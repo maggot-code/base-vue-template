@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:32:51
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 17:30:05
+ * @LastEditTime: 2021-01-15 17:54:47
  * @Description: component mg-from -> mg-select VUE
 -->
 <template>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { has, assign, isArray } from "lodash";
+import { assign, isArray } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import { checkEnumGroup, checkEnum } from "@/components/mg-form/utils";

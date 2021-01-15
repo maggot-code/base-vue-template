@@ -1,0 +1,61 @@
+[
+    {
+        "componentName": "mg-cascader",
+        "label": "导航",
+        "field": "nav",
+        "value": "",
+        "attrs": {
+            "enumList": [
+                {
+                    "label": "首页",
+                    "value": "home"
+                },
+                {
+                    "label": "文章",
+                    "value": "articles",
+                    "children": [
+                        {
+                            "label": "新闻",
+                            "value": "news",
+                            "children": []
+                        },
+                        {
+                            "label": "资讯",
+                            "value": "info"
+                        }
+                    ]
+                },
+                {
+                    "label": "图片",
+                    "value": "images",
+                    "children": [
+                        {
+                            "label": "产品图片",
+                            "value": "product"
+                        },
+                        {
+                            "label": "新闻图片",
+                            "value": "newsImg",
+                            "children": []
+                        },
+                        {
+                            "label": "默认图片",
+                            "value": "defaultImg",
+                            "children": [
+                                {
+                                    "label": "logo",
+                                    "value": "logo",
+                                    "children": []
+                                },
+                                {
+                                    "label": "新闻导图",
+                                    "value": "newsHead"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]

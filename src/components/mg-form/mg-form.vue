@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 16:08:00
+ * @LastEditTime: 2021-01-15 17:45:41
  * @Description: component mg-form VUE
 -->
 <template>
@@ -143,7 +143,6 @@ export default {
         schema: {
             handler(schema) {
                 const copySchema = cloneDeep(schema);
-                console.log(copySchema);
                 for (const keys in copySchema) {
                     this.$set(this.formData, keys, copySchema[keys].value);
                     if (copySchema[keys].rules) {
