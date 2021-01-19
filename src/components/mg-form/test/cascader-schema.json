@@ -45,7 +45,17 @@
                                 {
                                     "label": "logo",
                                     "value": "logo",
-                                    "children": []
+                                    "children": [
+                                        {
+                                            "label": "PC端",
+                                            "value": "Pc2Logo"
+                                        },
+                                        {
+                                            "label": "WAP端",
+                                            "value": "Wap2Logo",
+                                            "children": []
+                                        }
+                                    ]
                                 },
                                 {
                                     "label": "新闻导图",

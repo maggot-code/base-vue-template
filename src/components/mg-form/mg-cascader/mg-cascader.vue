@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:44:10
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 18:17:45
+ * @LastEditTime: 2021-01-19 14:25:42
  * @Description: component mg-from -> mg-cascader VUE
 -->
 <template>
@@ -11,14 +11,29 @@
         v-model="cascaderValue"
         v-bind="options"
         @change="change"
-    ></el-cascader>
+    >
+        <!-- <template slot-scope="{ node, data }">
+            <span>{{ data.label }}</span>
+            <span v-if="!node.isLeaf && data.children">
+                ({{ data.children.length }})
+            </span>
+        </template> -->
+    </el-cascader>
 </template>
 
 <script>
-import { cloneDeep, assign, isArray } from "lodash";
+import { cloneDeep, assign, isArray, isNil } from "lodash";
 import defaultOptions from "./options";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import { resetTrees } from "@/components/mg-form/utils";
+
+const BaseProps = {
+    expandTrigger: "hover",
+    multiple: false,
+    checkStrictly: false,
+    lazy: false,
+};
+
 export default {
     name: "mg-cascader",
     mixins: [MgFormMixins],
@@ -28,6 +43,8 @@ export default {
             type: [String, Number, Array],
             default: () => "",
         },
+
+        props: Object,
     },
     data() {
         //这里存放数据
@@ -39,11 +56,17 @@ export default {
     computed: {
         options: (vm) => {
             const { mold, enumList } = vm.$attrs;
+            const factor =
+                !isNil(vm.$props.props) &&
+                Object.keys(vm.$props.props).length > 0;
+            const cascaderProps = factor
+                ? assign({}, BaseProps, vm.$props.props)
+                : BaseProps;
+            const { lazy } = cascaderProps;
 
             const enums = vm.checkIsEnums(enumList)
-                ? resetTrees(cloneDeep(enumList))
+                ? resetTrees(cloneDeep(enumList), lazy)
                 : [];
-            console.log(enums);
             const defOptions = defaultOptions[mold] || defaultOptions.default;
             const protoAttrs = assign(
                 { options: enums },
@@ -51,8 +74,13 @@ export default {
                 vm.$props,
                 vm.$attrs
             );
+            protoAttrs.props = cascaderProps;
 
-            console.log(vm.delCommonProps(protoAttrs, ["enumList"]));
+            if (lazy) {
+                protoAttrs.props.expandTrigger = "click";
+                protoAttrs.props.lazyLoad = vm.lazyLoadBack;
+            }
+
             return vm.delCommonProps(protoAttrs, ["enumList"]);
         },
     },
@@ -74,6 +102,12 @@ export default {
         change(value) {
             this.$emit("update:value", value);
             this.keepValue(value);
+        },
+        lazyLoadBack(node, resolve) {
+            setTimeout(() => {
+                console.log(node);
+                resolve();
+            }, 1000);
         },
         checkIsEnums(tree) {
             return isArray(tree) && tree.length > 0;

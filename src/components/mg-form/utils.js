@@ -2,23 +2,26 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:32:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 18:21:25
+ * @LastEditTime: 2021-01-19 14:26:47
  * @Description: component mg-form utils tool
  */
 import { flake } from '@/utils/tool';
-import { compact, cloneDeep } from 'lodash';
+import { compact, cloneDeep, isNil, isBoolean } from 'lodash';
 
-export const resetTrees = (tree) => compact(tree.map(item => {
+export const resetTrees = (tree, lazy) => compact(tree.map(item => {
     if (item.label && item.value) {
         item.rid = flake.gen();
         item.disabled = item.disabled || false;
+        item.leaf = !isNil(item.leaf) && isBoolean(item.leaf) ? item.leaf : true;
+
         if (item.children) {
             if (item.children.length > 0) {
-                resetTrees(item.children)
+                resetTrees(item.children, lazy)
             } else {
                 delete item.children
             }
         }
+
         return item;
     } else return checkErrorLog(item, tree, '枚举树')
 }))

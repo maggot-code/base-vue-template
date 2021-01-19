@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 17:49:11
+ * @LastEditTime: 2021-01-18 14:21:32
  * @Description: test.vue
 -->
 <template>
@@ -20,7 +20,8 @@
 // import schemaJSON from "@/components/mg-form/test/slider-schema";
 // import schemaJSON from "@/components/mg-form/test/rate-schema";
 // import schemaJSON from "@/components/mg-form/test/select-schema";
-import schemaJSON from "@/components/mg-form/test/cascader-schema";
+// import schemaJSON from "@/components/mg-form/test/cascader-schema";
+import schemaJSON from "@/components/mg-form/test/cascader-schema2";
 import { objectRepeat } from "@/utils/tool";
 import MgForm from "@/components/mg-form";
 export default {

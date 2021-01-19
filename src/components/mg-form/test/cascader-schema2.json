@@ -1,0 +1,24 @@
+[
+    {
+        "componentName": "mg-cascader",
+        "label": "导航",
+        "field": "nav",
+        "value": "",
+        "attrs": {
+            "props": {
+                "lazy": true
+            },
+            "enumList": [
+                {
+                    "label": "首页1",
+                    "value": "home"
+                },
+                {
+                    "label": "文章2",
+                    "value": "articles",
+                    "leaf": false
+                }
+            ]
+        }
+    }
+]
