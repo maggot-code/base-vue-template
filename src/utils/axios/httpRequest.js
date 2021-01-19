@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 09:34:16
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-05 22:49:37
+ * @LastEditTime: 2021-01-18 17:01:07
  * @Description: axios http request
  */
 import axios from 'axios';
@@ -27,7 +27,7 @@ const Send = (baseUrl, options = {}) => {
         return Promise.reject('axios instance need "baseUrl<String & URL>"');
     }
 
-    const instance = axios.create({ baseUrl: baseUrl });
+    const instance = axios.create({ baseURL: baseUrl });
     interceptRequest(instance);
     interceptResponse(instance);
 
