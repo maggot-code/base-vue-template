@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:42:01
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 17:45:41
+ * @LastEditTime: 2021-01-22 11:27:48
  * @Description: component mg-form VUE
 -->
 <template>
@@ -134,12 +134,6 @@ export default {
     },
     //监控data中的数据变化
     watch: {
-        "formData.city": {
-            handler(newVal) {
-                // console.log(newVal);
-            },
-            deep: true,
-        },
         schema: {
             handler(schema) {
                 const copySchema = cloneDeep(schema);

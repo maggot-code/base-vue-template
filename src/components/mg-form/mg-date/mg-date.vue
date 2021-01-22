@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-21 17:56:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-22 11:13:54
+ * @LastEditTime: 2021-01-22 11:29:39
  * @Description: component mg-from -> mg-date VUE
 -->
 <template>
@@ -93,7 +93,7 @@ export default {
         hasDefaultValue(mold) {
             const moldRange = ["default", "date", "year", "month"];
 
-            return mold in moldRange;
+            return moldRange.indexOf(mold) >= 0;
         },
         keepValue(value) {
             this.$emit("keepValue", {
