@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 10:09:22
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-18 11:19:53
+ * @LastEditTime: 2021-01-19 15:23:44
  * @Description: element ui plugins
  */
 import Vue from 'vue';
@@ -12,6 +12,7 @@ import {
     Row,
     Col,
     Button,
+    ButtonGroup,
     // Form
     Radio,
     RadioGroup,
@@ -25,6 +26,9 @@ import {
     Rate,
     Option,
     OptionGroup,
+    DatePicker,
+    TimeSelect,
+    TimePicker,
     Cascader,
     CascaderPanel,
     Select,
@@ -41,6 +45,7 @@ import {
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Button);
+Vue.use(ButtonGroup);
 // Form
 Vue.use(Radio);
 Vue.use(RadioGroup);
@@ -54,6 +59,9 @@ Vue.use(Slider);
 Vue.use(Rate);
 Vue.use(Option);
 Vue.use(OptionGroup);
+Vue.use(DatePicker);
+Vue.use(TimeSelect);
+Vue.use(TimePicker);
 Vue.use(Cascader);
 Vue.use(CascaderPanel);
 Vue.use(Select);
