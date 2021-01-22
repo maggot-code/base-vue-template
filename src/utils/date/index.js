@@ -2,9 +2,10 @@
  * @Author: maggot-code
  * @Date: 2021-01-20 14:22:20
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-20 16:00:58
+ * @LastEditTime: 2021-01-22 10:23:42
  * @Description: utils date util
  */
+import { isNil, isNaN } from 'lodash';
 import fecha from './date-fecha';
 
 const newArray = function (start, end) {
@@ -35,7 +36,7 @@ export const isDateObject = (val) => val instanceof Date;
  * @return {Boolean}
  */
 export const isDate = (date) => {
-    if (date === null || date === undefined) return false;
+    if (isNil(date)) return false;
     if (isNaN(new Date(date).getTime())) return false;
     if (Array.isArray(date)) return false; // deal with `new Date([ new Date() ]) -> new Date()`
     return true;
@@ -60,6 +61,20 @@ export const formatDate = (date, format) => {
  * @return {Date}
  */
 export const parseDate = (string, format) => fecha.parse(string, format || 'yyyy-MM-dd');
+
+/**
+ * @description: 转换日期
+ * @param {Number | Date} dateValue
+ * @return {Date | Number | String}
+ */
+export const changeDate = (dateValue) => {
+    if (isDateObject(dateValue)) {
+        return new Date(dateValue).getTime();
+    } else {
+        const date = toDate(dateValue);
+        return isDateObject(date) ? date : ""
+    }
+}
 
 /**
  * @description: 获取月份的天数
@@ -202,24 +217,29 @@ export const modifyTime = (date, h, m, s) => {
 }
 
 /**
- * @description: 提取日期格式
- * @param {String} format
+ * @description: 提取日期时间
+ * @param {String} date
  * @return {String}
  */
-export const extractDateFormat = (format) => {
-    return format
-        .replace(/\W?m{1,2}|\W?ZZ/g, '')
-        .replace(/\W?h{1,2}|\W?s{1,3}|\W?a/gi, '')
-        .trim();
+export const extractDate = (date) => {
+    const [y, M, d, H, m, s] = date.split(/-|\/|\.|\s|:/);
+    console.log(y, M, d, H, m, s);
 }
 
 /**
- * @description: 提取时间格式
- * @param {String} format
+ * @description: 提取日期格式
+ * @param {String} date
  * @return {String}
  */
-export const extractTimeFormat = (format) => {
-    return format
-        .replace(/\W?D{1,2}|\W?Do|\W?d{1,4}|\W?M{1,4}|\W?y{2,4}/g, '')
-        .trim();
+export const extractFormat = (date) => {
+    // yyyy-MM-dd HH:mm:ss
+    // yyyy/MM/dd HH:mm:ss
+    // yyyy.MM.dd HH:mm:ss
+    // - || / || .
+    const [y, M, d, H, m, s] = date.split(/-|\/|\.|\s|:/);
+    console.log(y, M, d, H, m, s);
+
+    const year = date.replace(/\d/g, 'y').trim();
+
+    console.log(year);
 }
