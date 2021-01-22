@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 13:35:25
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-21 17:59:02
+ * @LastEditTime: 2021-01-22 11:13:38
  * @Description: component form cell install
  */
 import MgInput from "./mg-input";
@@ -14,7 +14,7 @@ import MgRate from './mg-rate';
 import MgSelect from './mg-select';
 import MgCascader from './mg-cascader';
 // import MgTimeFixed from './mg-time-fixed';
-import MgDateFixed from './mg-date-fixed';
+import MgDate from './mg-date';
 import MgUpload from './mg-upload';
 import MgTransfer from './mg-transfer';
 
@@ -28,7 +28,7 @@ const components = [
     MgSelect,
     MgCascader,
     // MgTimeFixed,
-    MgDateFixed,
+    MgDate,
     MgUpload,
     MgTransfer
 ];
@@ -60,7 +60,7 @@ export {
     MgSelect,
     MgCascader,
     // MgTimeFixed,
-    MgDateFixed,
+    MgDate,
     MgUpload,
     MgTransfer
 }

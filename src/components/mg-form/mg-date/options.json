@@ -1,0 +1,35 @@
+{
+    "default": {
+        "type": "date",
+        "format": "yyyy-MM-dd"
+    },
+    "date": {
+        "type": "date",
+        "format": "yyyy-MM-dd"
+    },
+    "year": {
+        "type": "year",
+        "format": "yyyy"
+    },
+    "month": {
+        "type": "month",
+        "format": "yyyy-MM"
+    },
+    "datetime": {
+        "type": "datetime",
+        "format": "yyyy-MM-dd HH:mm:ss"
+    },
+    "dates": {
+        "type": "dates",
+        "format": "dd"
+    },
+    "datetimerange": {
+        "type": "datetimerange"
+    },
+    "daterange": {
+        "type": "daterange"
+    },
+    "monthrange": {
+        "type": "monthrange"
+    }
+}

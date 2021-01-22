@@ -1,0 +1,77 @@
+[
+    {
+        "componentName": "mg-date",
+        "label": "日期选择",
+        "field": "dateFixed",
+        "value": 1611279854448,
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "year",
+        "label": "年份选择",
+        "field": "yearFixed",
+        "value": 1611279854448,
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "month",
+        "label": "月份选择",
+        "field": "monthFixed",
+        "value": 1611279854448,
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "datetime",
+        "label": "日期时间选择",
+        "field": "datetimeFixed",
+        "value": 1611279854448,
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "dates",
+        "label": "多日期选择",
+        "field": "dates",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "datetimerange",
+        "label": "日期时间范围",
+        "field": "datetimerange",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "daterange",
+        "label": "日期范围",
+        "field": "daterange",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "attrs": {}
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "monthrange",
+        "label": "月份范围",
+        "field": "monthrange",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "attrs": {}
+    }
+]
