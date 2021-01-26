@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-21 17:56:18
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-22 11:29:39
+ * @LastEditTime: 2021-01-26 15:20:26
  * @Description: component mg-from -> mg-date VUE
 -->
 <template>
@@ -16,14 +16,17 @@
 </template>
 
 <script>
-import { assign, has, isArray } from "lodash";
+import { isArray } from "lodash";
 import { changeDate } from "@/utils/date";
-import defaultOptions from "./options";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 
-const limitOptions = {
+const LimitOptions = {
     editable: false,
     clearable: true,
+    placeholder: "请选择日期",
+    "start-placeholder": "开始日期",
+    "end-placeholder": "结束日期",
     "range-separator": "至",
 };
 
@@ -37,18 +40,18 @@ export default {
             default: () => "",
         },
 
-        placeholder: {
-            type: String,
-            default: () => "请选择日期",
-        },
-        "start-placeholder": {
-            type: String,
-            default: () => "请选择开始日期",
-        },
-        "end-placeholder": {
-            type: String,
-            default: () => "请选择结束日期",
-        },
+        // placeholder: {
+        //     type: String,
+        //     default: () => "请选择日期",
+        // },
+        // "start-placeholder": {
+        //     type: String,
+        //     default: () => "请选择开始日期",
+        // },
+        // "end-placeholder": {
+        //     type: String,
+        //     default: () => "请选择结束日期",
+        // },
     },
     data() {
         //这里存放数据
@@ -59,22 +62,19 @@ export default {
     //监听属性 类似于data概念
     computed: {
         options: (vm) => {
-            const { mold } = vm.$attrs;
-
-            if (vm.hasDefaultValue(mold)) {
-                limitOptions["default-value"] = vm.dateValue;
-            }
-
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign(
-                {},
+            const { mold } = vm.$props;
+            const vBind = vm.mergeSchema(
                 vm.$props,
-                vm.$attrs,
-                defOptions,
-                limitOptions
+                vm.delOtherSchema(vm.$attrs.dataSchema),
+                DefaultAttrs[mold],
+                LimitOptions,
+                vm.delOtherSchema(vm.$attrs.uiSchema)
             );
 
-            return vm.delCommonProps(protoAttrs);
+            if (vm.hasDefaultValue(mold)) {
+                LimitOptions["default-value"] = vm.dateValue;
+            }
+            return vBind;
         },
     },
     //监控data中的数据变化
@@ -95,17 +95,9 @@ export default {
 
             return moldRange.indexOf(mold) >= 0;
         },
-        keepValue(value) {
-            this.$emit("keepValue", {
-                tag: this.tag,
-                field: this.field,
-                value: value,
-            });
-        },
         change(value) {
             const date = this.setupValue(value);
-            this.$emit("update:value", date);
-            this.keepValue(date);
+            this.keepValue(date, "change");
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）

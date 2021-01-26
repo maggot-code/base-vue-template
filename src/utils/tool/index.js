@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-05 10:53:57
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-20 14:21:30
+ * @LastEditTime: 2021-01-22 15:58:09
  * @Description: utils tool room
  */
 import flake from '@/utils/tool/sign';
@@ -34,7 +34,7 @@ const propsCheck = (condition, abnormal) => {
 }
 
 // 对象查重
-const objectRepeat = (api, obj, keys) => {
+const objectRepeat = (obj, keys, api) => {
     if (obj[keys]) {
         console.error(`%c ${keys}字段已经存在,请检查 api json:%o\n`, "background:#f56c6c;color:#fff;", api);
         return false;

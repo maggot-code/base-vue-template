@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 13:34:48
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 16:44:13
+ * @LastEditTime: 2021-01-26 10:47:48
  * @Description: component mg-from -> mg-radio VUE
 -->
 <template>
@@ -12,20 +12,20 @@
         v-bind="options"
         @change="change"
     >
-        <template v-if="options.mold === 'button'">
+        <template v-if="mold === 'button'">
             <el-radio-button
-                v-for="cell in options.enums"
-                :key="cell.rid"
+                v-for="cell in checkIsEnums(options.enums)"
+                :key="cell.eid"
                 :label="cell.value"
                 :disabled="cell.disabled"
                 >{{ cell.label }}</el-radio-button
             >
         </template>
 
-        <template v-else-if="options.mold === 'radio'">
+        <template v-else-if="mold === 'radio'">
             <el-radio
-                v-for="cell in options.enums"
-                :key="cell.rid"
+                v-for="cell in checkIsEnums(options.enums)"
+                :key="cell.eid"
                 :label="cell.value"
                 :disabled="cell.disabled"
                 :border="options.border"
@@ -35,8 +35,8 @@
 
         <template v-else>
             <el-radio
-                v-for="cell in options.enums"
-                :key="cell.rid"
+                v-for="cell in checkIsEnums(options.enums)"
+                :key="cell.eid"
                 :label="cell.value"
                 :disabled="cell.disabled"
                 :border="options.border"
@@ -47,11 +47,10 @@
 </template>
 
 <script>
-import { assign } from "lodash";
-import defaultOptions from "./options";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import MgRadioMixins from "@/components/mg-form/mixins/mg-radio-mixins";
-import { checkEnum } from "@/components/mg-form/utils";
+
 export default {
     name: "mg-radio",
     mixins: [MgFormMixins, MgRadioMixins],
@@ -64,18 +63,15 @@ export default {
     //监听属性 类似于data概念
     computed: {
         options: (vm) => {
-            const { mold, enumList } = vm.$attrs;
-
-            const enums = vm.checkIsEnums(enumList) ? checkEnum(enumList) : [];
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign(
-                { enums: enums },
-                defOptions,
+            const { mold } = vm.$props;
+            const vBind = vm.mergeSchema(
+                DefaultAttrs[mold],
                 vm.$props,
-                vm.$attrs
+                vm.delOtherSchema(vm.$attrs.uiSchema),
+                vm.delOtherSchema(vm.$attrs.dataSchema)
             );
 
-            return vm.delCommonProps(protoAttrs);
+            return vBind;
         },
     },
     //监控data中的数据变化

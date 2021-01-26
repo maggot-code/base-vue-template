@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-13 16:49:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-14 23:41:28
+ * @LastEditTime: 2021-01-26 10:05:34
  * @Description: component mg-from -> mg-input VUE
 -->
 <template>
@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import { assign } from "lodash";
-import defaultOptions from "./options";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
+
 export default {
     name: "mg-input",
     mixins: [MgFormMixins],
@@ -26,27 +26,6 @@ export default {
         value: {
             type: [String, Number],
             default: () => "",
-        },
-
-        type: {
-            type: String,
-            default: () => "text",
-        },
-        clearable: {
-            type: Boolean,
-            default: () => true,
-        },
-        placeholder: {
-            type: String,
-            default: () => "请输入内容",
-        },
-        disabled: {
-            type: Boolean,
-            default: () => false,
-        },
-        readonly: {
-            type: Boolean,
-            default: () => false,
         },
     },
     data() {
@@ -58,12 +37,14 @@ export default {
     //监听属性 类似于data概念
     computed: {
         options: (vm) => {
-            const { mold } = vm.$attrs;
+            const { mold } = vm.$props;
+            const vBind = vm.mergeSchema(
+                DefaultAttrs[mold],
+                vm.$props,
+                vm.delOtherSchema(vm.$attrs.uiSchema, ["type"])
+            );
 
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign({}, vm.$attrs, vm.$props, defOptions);
-
-            return vm.delCommonProps(protoAttrs);
+            return vBind;
         },
     },
     //监控data中的数据变化
@@ -74,16 +55,8 @@ export default {
     },
     //方法集合
     methods: {
-        keepValue(value) {
-            this.$emit("keepValue", {
-                tag: this.tag,
-                field: this.field,
-                value: value,
-            });
-        },
         input(value) {
-            this.$emit("update:value", value);
-            this.keepValue(value);
+            this.keepValue(value, "input");
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）

@@ -1,9 +1,0 @@
-[
-    {
-        "componentName": "mg-transfer",
-        "label": "排班",
-        "field": "arrayWork",
-        "value": [],
-        "attrs": {}
-    }
-]

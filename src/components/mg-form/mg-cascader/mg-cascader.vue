@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:44:10
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-19 14:25:42
+ * @LastEditTime: 2021-01-26 14:38:20
  * @Description: component mg-from -> mg-cascader VUE
 -->
 <template>
@@ -23,7 +23,7 @@
 
 <script>
 import { cloneDeep, assign, isArray, isNil } from "lodash";
-import defaultOptions from "./options";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import { resetTrees } from "@/components/mg-form/utils";
 
@@ -55,33 +55,31 @@ export default {
     //监听属性 类似于data概念
     computed: {
         options: (vm) => {
-            const { mold, enumList } = vm.$attrs;
-            const factor =
-                !isNil(vm.$props.props) &&
-                Object.keys(vm.$props.props).length > 0;
+            const { mold, props } = vm.$props;
+            const { enums } = vm.$attrs.dataSchema;
+
+            const factor = !isNil(props) && Object.keys(props).length > 0;
             const cascaderProps = factor
-                ? assign({}, BaseProps, vm.$props.props)
+                ? assign({}, BaseProps, props)
                 : BaseProps;
             const { lazy } = cascaderProps;
-
-            const enums = vm.checkIsEnums(enumList)
-                ? resetTrees(cloneDeep(enumList), lazy)
+            const enumsList = vm.checkIsEnums(enums)
+                ? resetTrees(cloneDeep(enums), lazy)
                 : [];
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign(
-                { options: enums },
-                defOptions,
+            const vBind = vm.mergeSchema(
+                { options: enumsList },
+                DefaultAttrs[mold],
                 vm.$props,
-                vm.$attrs
+                vm.delOtherSchema(vm.$attrs.uiSchema),
+                vm.delOtherSchema(vm.$attrs.dataSchema, ["enums"])
             );
-            protoAttrs.props = cascaderProps;
 
+            vBind.props = cascaderProps;
             if (lazy) {
-                protoAttrs.props.expandTrigger = "click";
-                protoAttrs.props.lazyLoad = vm.lazyLoadBack;
+                vBind.props.expandTrigger = "click";
+                vBind.props.lazyLoad = vm.lazyLoadBack;
             }
-
-            return vm.delCommonProps(protoAttrs, ["enumList"]);
+            return vBind;
         },
     },
     //监控data中的数据变化
@@ -92,16 +90,8 @@ export default {
     },
     //方法集合
     methods: {
-        keepValue(value) {
-            this.$emit("keepValue", {
-                tag: this.tag,
-                field: this.field,
-                value: value,
-            });
-        },
         change(value) {
-            this.$emit("update:value", value);
-            this.keepValue(value);
+            this.keepValue(value, "change");
         },
         lazyLoadBack(node, resolve) {
             setTimeout(() => {

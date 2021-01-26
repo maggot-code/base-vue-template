@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 15:32:51
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 17:54:47
+ * @LastEditTime: 2021-01-26 10:33:36
  * @Description: component mg-from -> mg-select VUE
 -->
 <template>
@@ -10,20 +10,18 @@
         class="mg-select"
         v-model="selectValue"
         v-bind="options"
-        :multiple="setupMultiple"
-        :collapse-tags="setupCollapseTags"
         @change="change"
     >
-        <template v-if="options.mold === 'group'">
+        <template v-if="mold === 'group'">
             <el-option-group
                 v-for="group in options.enums"
-                :key="group.rid"
+                :key="group.eid"
                 :label="group.label"
                 :disabled="group.disabled"
             >
                 <el-option
                     v-for="item in group.options"
-                    :key="item.rid"
+                    :key="item.eid"
                     :label="item.label"
                     :value="item.value"
                     :disabled="item.disabled"
@@ -34,7 +32,7 @@
         <template v-else>
             <el-option
                 v-for="item in options.enums"
-                :key="item.rid"
+                :key="item.eid"
                 :label="item.label"
                 :value="item.value"
                 :disabled="item.disabled"
@@ -44,10 +42,9 @@
 </template>
 
 <script>
-import { assign, isArray } from "lodash";
-import defaultOptions from "./options";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
-import { checkEnumGroup, checkEnum } from "@/components/mg-form/utils";
+
 export default {
     name: "mg-select",
     mixins: [MgFormMixins],
@@ -70,10 +67,6 @@ export default {
             type: Boolean,
             default: () => true,
         },
-        placeholder: {
-            type: String,
-            default: () => "请选择内容",
-        },
     },
     data() {
         //这里存放数据
@@ -83,30 +76,16 @@ export default {
     },
     //监听属性 类似于data概念
     computed: {
-        setupMultiple: (vm) =>
-            isArray(vm.value) ? true : vm.multiple ? false : false,
-        setupCollapseTags: (vm) => vm.setupMultiple,
-
         options: (vm) => {
-            const { mold, enumList } = vm.$attrs;
-            const enumCheckFunc = mold === "group" ? checkEnumGroup : checkEnum;
-
-            const enums = vm.checkIsEnums(enumList)
-                ? enumCheckFunc(enumList)
-                : [];
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign(
-                { enums: enums },
-                defOptions,
+            const { mold } = vm.$props;
+            const vBind = vm.mergeSchema(
+                DefaultAttrs[mold],
                 vm.$props,
-                vm.$attrs
+                vm.delOtherSchema(vm.$attrs.uiSchema),
+                vm.delOtherSchema(vm.$attrs.dataSchema)
             );
 
-            return vm.delCommonProps(protoAttrs, [
-                "enumList",
-                "multiple",
-                "collapse-tags",
-            ]);
+            return vBind;
         },
     },
     //监控data中的数据变化
@@ -117,19 +96,8 @@ export default {
     },
     //方法集合
     methods: {
-        keepValue(value) {
-            this.$emit("keepValue", {
-                tag: this.tag,
-                field: this.field,
-                value: value,
-            });
-        },
         change(value) {
-            this.$emit("update:value", value);
-            this.keepValue(value);
-        },
-        checkIsEnums(list) {
-            return isArray(list) && list.length > 0;
+            this.keepValue(value, "change");
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）

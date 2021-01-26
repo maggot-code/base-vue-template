@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:44:28
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 10:10:57
+ * @LastEditTime: 2021-01-26 13:57:34
  * @Description: component mg-from -> mg-switch VUE
 -->
 <template>
@@ -16,8 +16,7 @@
 </template>
 
 <script>
-import { assign } from "lodash";
-import defaultOptions from "./options";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 export default {
     name: "mg-switch",
@@ -38,12 +37,15 @@ export default {
     //监听属性 类似于data概念
     computed: {
         options: (vm) => {
-            const { mold } = vm.$attrs;
+            const { mold } = vm.$props;
+            const vBind = vm.mergeSchema(
+                DefaultAttrs[mold],
+                vm.$props,
+                vm.delOtherSchema(vm.$attrs.uiSchema),
+                vm.delOtherSchema(vm.$attrs.dataSchema)
+            );
 
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign({}, defOptions, vm.$props, vm.$attrs);
-
-            return vm.delCommonProps(protoAttrs);
+            return vBind;
         },
     },
     //监控data中的数据变化
@@ -54,16 +56,8 @@ export default {
     },
     //方法集合
     methods: {
-        keepValue(value) {
-            this.$emit("keepValue", {
-                tag: this.tag,
-                field: this.field,
-                value: value,
-            });
-        },
         change(value) {
-            this.$emit("update:value", value);
-            this.keepValue(value);
+            this.keepValue(value, "change");
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）

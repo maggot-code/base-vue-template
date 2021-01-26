@@ -2,15 +2,15 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:23:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 16:43:56
+ * @LastEditTime: 2021-01-26 13:50:26
  * @Description: component mg-from -> mg-check-box VUE
 -->
 <template>
     <div class="mg-check-box">
         <el-checkbox
             v-if="selectAll"
-            :indeterminate="selectAll"
             v-model="checkAll"
+            :indeterminate="isIndeterminate"
             @change="handleCheckAllChange"
             >全选</el-checkbox
         >
@@ -20,20 +20,20 @@
             v-bind="options"
             @change="change"
         >
-            <template v-if="options.mold === 'button'">
+            <template v-if="mold === 'button'">
                 <el-checkbox-button
-                    v-for="cell in options.enums"
-                    :key="cell.rid"
+                    v-for="cell in checkIsEnums(options.enums)"
+                    :key="cell.eid"
                     :label="cell.value"
                     :disabled="cell.disabled"
                     >{{ cell.label }}</el-checkbox-button
                 >
             </template>
 
-            <template v-else-if="options.mold === 'radio'">
+            <template v-else-if="mold === 'radio'">
                 <el-checkbox
-                    v-for="cell in options.enums"
-                    :key="cell.rid"
+                    v-for="cell in checkIsEnums(options.enums)"
+                    :key="cell.eid"
                     :label="cell.value"
                     :disabled="cell.disabled"
                     :border="options.border"
@@ -43,8 +43,8 @@
 
             <template v-else>
                 <el-checkbox
-                    v-for="cell in options.enums"
-                    :key="cell.rid"
+                    v-for="cell in checkIsEnums(options.enums)"
+                    :key="cell.eid"
                     :label="cell.value"
                     :disabled="cell.disabled"
                     :border="options.border"
@@ -56,11 +56,11 @@
 </template>
 
 <script>
-import { assign } from "lodash";
-import defaultOptions from "./options";
+import { isNil } from "lodash";
+import DefaultAttrs from "./default";
 import MgFormMixins from "@/components/mg-form/mixins/mg-form-mixins";
 import MgRadioMixins from "@/components/mg-form/mixins/mg-radio-mixins";
-import { checkEnum } from "@/components/mg-form/utils";
+
 export default {
     name: "mg-check-box",
     mixins: [MgFormMixins, MgRadioMixins],
@@ -70,72 +70,64 @@ export default {
             type: Array,
             default: () => [],
         },
-
-        isIndeterminate: {
-            type: Boolean,
-            default: () => false,
-        },
     },
     data() {
         //这里存放数据
         return {
             checkAll: false,
-            selectAll: this.isIndeterminate,
+            isIndeterminate: false,
         };
     },
     //监听属性 类似于data概念
     computed: {
-        options: (vm) => {
-            const { mold, enumList } = vm.$attrs;
+        selectAll: (vm) => {
+            const { indeterminate } = vm.$attrs.uiSchema;
 
-            const enums = vm.checkIsEnums(enumList) ? checkEnum(enumList) : [];
-            const defOptions = defaultOptions[mold] || defaultOptions.default;
-            const protoAttrs = assign(
-                { enums: enums },
-                defOptions,
+            return isNil(indeterminate) ? false : indeterminate;
+        },
+        options: (vm) => {
+            const { mold } = vm.$props;
+            const vBind = vm.mergeSchema(
+                DefaultAttrs[mold],
                 vm.$props,
-                vm.$attrs
+                vm.delOtherSchema(vm.$attrs.uiSchema, ["indeterminate"]),
+                vm.delOtherSchema(vm.$attrs.dataSchema)
             );
 
-            return vm.delCommonProps(protoAttrs);
+            return vBind;
         },
     },
     //监控data中的数据变化
     watch: {
-        value(newVal) {
-            this.radioValue = newVal;
-            this.selectAll && this.change(newVal);
-        },
-        isIndeterminate(newVal) {
-            this.selectAll = newVal;
+        value: {
+            handler(newVal) {
+                this.radioValue = newVal;
+                this.change(newVal);
+            },
+            immediate: true,
         },
     },
     //方法集合
     methods: {
         handleCheckAllChange(value) {
-            const baseEnums = this.options.enums;
-            this.selectAll = false;
-            this.radioValue = value ? baseEnums.map((item) => item.value) : [];
-            this.$emit("update:value", this.radioValue);
-            this.keepValue(this.radioValue);
+            const copyEnums = this.options.enums.map((item) => item.value);
+
+            this.radioValue = value ? copyEnums : [];
+            this.change(this.radioValue);
         },
         change(value) {
-            if (this.selectAll) {
-                const checkBoxCount = value.length;
-                this.checkAll = checkBoxCount === this.options.enums.length;
-                this.selectAll =
-                    checkBoxCount > 0 &&
-                    checkBoxCount < this.options.enums.length;
-            }
+            const checkedCount = value.length;
+            const checkAll = checkedCount === this.options.enums.length;
+            const isIndeterminate =
+                checkedCount > 0 && checkedCount < this.options.enums.length;
 
-            this.$emit("update:value", value);
-            this.keepValue(value);
+            this.checkAll = checkAll;
+            this.isIndeterminate = isIndeterminate;
+            this.keepValue(value, "change");
         },
     },
     //生命周期 - 创建完成（可以访问当前this实例）
-    created() {
-        this.selectAll && this.change(this.value);
-    },
+    created() {},
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {},
     beforeCreate() {}, //生命周期 - 创建之前

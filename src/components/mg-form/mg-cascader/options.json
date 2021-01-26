@@ -1,9 +1,0 @@
-{
-    "default": {
-        "placeholder": "请输入关键字",
-        "clearable": true,
-        "collapse-tags": true,
-        "filterable": true,
-        "show-all-levels": false
-    }
-}

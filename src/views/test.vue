@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-22 11:20:44
+ * @LastEditTime: 2021-01-26 15:21:20
  * @Description: test.vue
 -->
 <template>
@@ -12,21 +12,9 @@
 </template>
 
 <script>
-// import schemaJSON from "@/components/mg-form/test/schema";
-// import schemaJSON from "@/components/mg-form/test/input-schema";
-// import schemaJSON from "@/components/mg-form/test/radio-schema";
-// import schemaJSON from "@/components/mg-form/test/check-box-schema";
-// import schemaJSON from "@/components/mg-form/test/switch-schema";
-// import schemaJSON from "@/components/mg-form/test/slider-schema";
-// import schemaJSON from "@/components/mg-form/test/rate-schema";
-// import schemaJSON from "@/components/mg-form/test/select-schema";
-// import schemaJSON from "@/components/mg-form/test/cascader-schema";
-// import schemaJSON from "@/components/mg-form/test/cascader-schema2";
-// import schemaJSON from "@/components/mg-form/test/date-schema";
-// import schemaJSON from "@/components/mg-form/test/transfer-schema";
-import schemaJSON from "@/components/mg-form/test/linkage-schema";
+import schemaJSON from "@/components/mg-form/test/test-schema-v1.json";
 
-import { objectRepeat } from "@/utils/tool";
+import { setupFormSchema } from "@/components/mg-form/utils";
 import MgForm from "@/components/mg-form";
 export default {
     name: "mg-test",
@@ -47,10 +35,7 @@ export default {
     methods: {},
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {
-        schemaJSON.forEach((cell) => {
-            objectRepeat(schemaJSON, this.formSchema, cell.field) &&
-                this.$set(this.formSchema, cell.field, cell);
-        });
+        this.formSchema = setupFormSchema(schemaJSON);
     },
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {},

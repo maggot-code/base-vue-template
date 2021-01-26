@@ -1,0 +1,518 @@
+[
+    {
+        "componentName": "mg-input",
+        "mold": "text",
+        "field": "name",
+        "value": "",
+        "dataSchema": {},
+        "uiSchema": {
+            "label": "名字",
+            "placeholder": "请输入名字"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-input",
+        "mold": "password",
+        "field": "password",
+        "value": "",
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 12,
+            "label": "密码",
+            "placeholder": "请输入密码"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-input",
+        "mold": "password",
+        "field": "isPassword",
+        "value": "",
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 12,
+            "label": "确认密码",
+            "placeholder": "请确认密码"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-radio",
+        "mold": "radio",
+        "field": "sex",
+        "value": "0",
+        "dataSchema": {
+            "enums": [
+                {
+                    "eid": "100919aad3124121a4ce92e15601f396",
+                    "value": "0",
+                    "label": "女"
+                },
+                {
+                    "eid": "10c806ac557b4cc1a257e61fcc40ef99",
+                    "value": "1",
+                    "label": "男"
+                }
+            ]
+        },
+        "uiSchema": {
+            "col": 12,
+            "label": "性别"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-radio",
+        "mold": "button",
+        "field": "sexy",
+        "value": "0",
+        "dataSchema": {
+            "enums": [
+                {
+                    "eid": "446eb9cac17c46ce94ce749f0e265cd0",
+                    "value": "0",
+                    "label": "女"
+                },
+                {
+                    "eid": "7e1d50b710e94e6a8504f2227948e19f",
+                    "value": "1",
+                    "label": "男"
+                },
+                {
+                    "eid": "ab5cd770fe4e43eca71390387d9b682d",
+                    "value": "2",
+                    "label": "未知"
+                }
+            ]
+        },
+        "uiSchema": {
+            "col": 12,
+            "label": "取向",
+            "fill": "#F56C6C"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-check-box",
+        "mold": "button",
+        "field": "hobby",
+        "value": [
+            "2",
+            "3"
+        ],
+        "dataSchema": {
+            "enums": [
+                {
+                    "eid": "a8cc8414b06347049fdc08041e8e4bc1",
+                    "value": "0",
+                    "label": "睡觉"
+                },
+                {
+                    "eid": "b594cb7d231e4ed686c4e71dcc6f704b",
+                    "value": "1",
+                    "label": "吃饭"
+                },
+                {
+                    "eid": "14e3fa2f426543e395200aed891e3cb2",
+                    "value": "2",
+                    "label": "听歌"
+                },
+                {
+                    "eid": "79bc3b869ab9427c866ab6efaef2d22d",
+                    "value": "3",
+                    "label": "打游戏"
+                }
+            ]
+        },
+        "uiSchema": {
+            "label": "爱好",
+            "indeterminate": true,
+            "fill": "#F56C6C"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-check-box",
+        "mold": "radio",
+        "field": "family",
+        "value": [
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        "dataSchema": {
+            "enums": [
+                {
+                    "eid": "7bb8a0c0fe934f8cbb0d0820223f1808",
+                    "value": "0",
+                    "label": "妈妈"
+                },
+                {
+                    "eid": "351f1715ee6e4b37b86785b6a45f725d",
+                    "value": "1",
+                    "label": "爸爸"
+                },
+                {
+                    "eid": "9e1bba98c42e4b448a8d9d7746d1107b",
+                    "value": "2",
+                    "label": "哥哥"
+                },
+                {
+                    "eid": "65c21fc44d4144fab9cad09dff4b1e4b",
+                    "value": "3",
+                    "label": "姐姐"
+                }
+            ]
+        },
+        "uiSchema": {
+            "label": "家属",
+            "indeterminate": true
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-switch",
+        "mold": "default",
+        "field": "food",
+        "value": "米饭",
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 6,
+            "label": "米饭or面条",
+            "active-value": "米饭",
+            "inactive-value": "面条"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-switch",
+        "mold": "default",
+        "field": "hasMoney",
+        "value": true,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 6,
+            "label": "有没有钱",
+            "active-icon-class": "el-icon-success",
+            "inactive-icon-class": "el-icon-error",
+            "inactive-color": "#F56C6C"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-switch",
+        "mold": "default",
+        "field": "isSmoke",
+        "value": false,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 6,
+            "label": "能吸烟",
+            "active-text": "可以",
+            "inactive-text": "不行",
+            "active-color": "#E6A23C"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-rate",
+        "mold": "default",
+        "field": "assess",
+        "value": 2,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 6,
+            "label": "评价"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-slider",
+        "mold": "default",
+        "field": "money",
+        "value": 0,
+        "dataSchema": {},
+        "uiSchema": {
+            "label": "投资"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-select",
+        "field": "adderss",
+        "value": "",
+        "mold": "default",
+        "dataSchema": {
+            "enums": [
+                {
+                    "eid": "fe5ff46faa7c4077863a71b49ee63be3",
+                    "label": "北方人",
+                    "value": "0"
+                },
+                {
+                    "eid": "19a28170091945ae949defa27086f81d",
+                    "label": "南方人",
+                    "value": "1"
+                }
+            ]
+        },
+        "uiSchema": {
+            "col": 12,
+            "label": "哪里人",
+            "placeholder": "请选择哪里人"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-cascader",
+        "mold": "default",
+        "field": "nav",
+        "value": "",
+        "dataSchema": {
+            "enums": [
+                {
+                    "label": "首页",
+                    "value": "home"
+                },
+                {
+                    "label": "文章",
+                    "value": "articles",
+                    "children": [
+                        {
+                            "label": "新闻",
+                            "value": "news",
+                            "children": []
+                        },
+                        {
+                            "label": "资讯",
+                            "value": "info"
+                        }
+                    ]
+                },
+                {
+                    "label": "图片",
+                    "value": "images",
+                    "children": [
+                        {
+                            "label": "产品图片",
+                            "value": "product"
+                        },
+                        {
+                            "label": "新闻图片",
+                            "value": "newsImg",
+                            "children": []
+                        },
+                        {
+                            "label": "默认图片",
+                            "value": "defaultImg",
+                            "children": [
+                                {
+                                    "label": "logo",
+                                    "value": "logo",
+                                    "children": [
+                                        {
+                                            "label": "PC端",
+                                            "value": "Pc2Logo"
+                                        },
+                                        {
+                                            "label": "WAP端",
+                                            "value": "Wap2Logo",
+                                            "children": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "label": "新闻导图",
+                                    "value": "newsHead"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "uiSchema": {
+            "col": 12,
+            "label": "导航"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "default",
+        "field": "dateFixed",
+        "value": 1611279854448,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 8,
+            "label": "日期选择"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "year",
+        "field": "yearFixed",
+        "value": 1611279854448,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 8,
+            "label": "年份选择",
+            "placeholder": "请选择年份"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "month",
+        "field": "monthFixed",
+        "value": 1611279854448,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 8,
+            "label": "月份选择",
+            "placeholder": "请选择月份"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "datetime",
+        "field": "datetimeFixed",
+        "value": 1611279854448,
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 12,
+            "label": "日期时间选择"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "dates",
+        "field": "dates",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 12,
+            "label": "多日期选择"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "daterange",
+        "field": "daterange",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 12,
+            "label": "日期范围"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "monthrange",
+        "field": "monthrange",
+        "value": [],
+        "dataSchema": {},
+        "uiSchema": {
+            "col": 12,
+            "label": "月份范围",
+            "start-placeholder": "开始月份",
+            "end-placeholder": "结束月份"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    },
+    {
+        "componentName": "mg-date",
+        "mold": "datetimerange",
+        "field": "datetimerange",
+        "value": [
+            1611279854448,
+            1609689600000
+        ],
+        "dataSchema": {},
+        "uiSchema": {
+            "label": "日期时间范围",
+            "start-placeholder": "开始日期/时间",
+            "end-placeholder": "结束日期/时间"
+        },
+        "eventSchema": {},
+        "rulesSchema": [],
+        "leaderTag": [],
+        "workerTag": []
+    }
+]

@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-15 09:18:40
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-15 09:27:57
+ * @LastEditTime: 2021-01-26 10:46:40
  * @Description: component mg-from -> mg-radio mixins
  */
 import { isArray } from 'lodash';
@@ -31,19 +31,11 @@ export default {
         },
     },
     methods: {
-        keepValue(value) {
-            this.$emit("keepValue", {
-                tag: this.tag,
-                field: this.field,
-                value: value,
-            });
-        },
         change(value) {
-            this.$emit("update:value", value);
-            this.keepValue(value);
+            this.keepValue(value, 'change');
         },
         checkIsEnums(list) {
-            return isArray(list) && list.length > 0;
+            return isArray(list) && list.length > 0 ? list : [];
         },
     }
 }
