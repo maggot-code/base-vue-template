@@ -2,10 +2,10 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:32:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-26 09:37:21
+ * @LastEditTime: 2021-01-26 18:07:16
  * @Description: component mg-form utils tool
  */
-import { flake, objectRepeat } from '@/utils/tool';
+import { flake, mapObjectRepeat } from '@/utils/tool';
 import { compact, cloneDeep, isString, isArray, isNil, isBoolean, isObject } from 'lodash';
 
 export const resetTrees = (tree, lazy) => compact(tree.map(item => {
@@ -69,14 +69,16 @@ export const getWorker = (schema, tagName) => {
  * @return {Array[Object]} 验证过滤后的结构定义
  */
 export const setupFormSchema = (schema) => {
-    const copyToSchema = {};
+    // const copyToSchema = {};
+    const copyToSchema = new Map();
 
     schema.forEach((cellSchema) => {
         const isSchemaFormat = provingSchemaFormat(cellSchema);
-        const repeatObjectKey = objectRepeat(copyToSchema, cellSchema.field, schema);
+        const repeatObjectKey = mapObjectRepeat(copyToSchema, cellSchema.field, schema);
 
         if (isSchemaFormat && repeatObjectKey) {
-            copyToSchema[cellSchema.field] = cellSchema;
+            // copyToSchema[cellSchema.field] = cellSchema;
+            copyToSchema.set(cellSchema.field, cellSchema);
         }
     });
 

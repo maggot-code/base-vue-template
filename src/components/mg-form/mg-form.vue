@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-22 13:08:30
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-26 10:34:18
+ * @LastEditTime: 2021-01-26 18:04:47
  * @Description: component mg-form VUE
 -->
 <template>
@@ -20,17 +20,17 @@
         :status-icon="false"
     >
         <template v-if="inline">
-            <template v-for="(cell, field) in formSchema">
+            <template v-for="cell in formSchema">
                 <el-form-item
-                    v-if="checkIsComponent(cell.componentName)"
-                    :key="field"
+                    v-if="checkIsComponent(cell[1].componentName)"
+                    :key="cell[0]"
                     v-bind="setFormItem(field, cell.uiSchema)"
                 >
                     <component
-                        :is="cell.componentName"
-                        :field="field"
-                        :value.sync="formData[field]"
-                        v-bind="setupAttrs(cell)"
+                        :is="cell[1].componentName"
+                        :field="cell[0]"
+                        :value.sync="formData[cell[0]]"
+                        v-bind="setupAttrs(cell[1])"
                         @keepValue="keepValue"
                     ></component>
                 </el-form-item>
@@ -39,20 +39,20 @@
 
         <template v-else>
             <el-row :gutter="20">
-                <template v-for="(cell, field) in formSchema">
+                <template v-for="cell in formSchema">
                     <el-col
-                        v-if="checkIsComponent(cell.componentName)"
-                        :key="field"
-                        :span="setColSpan(cell.uiSchema)"
+                        v-if="checkIsComponent(cell[1].componentName)"
+                        :key="cell[0]"
+                        :span="setColSpan(cell[1].uiSchema)"
                     >
                         <el-form-item
-                            v-bind="setFormItem(field, cell.uiSchema)"
+                            v-bind="setFormItem(cell[0], cell[1].uiSchema)"
                         >
                             <component
-                                :is="cell.componentName"
-                                :field="field"
-                                :value.sync="formData[field]"
-                                v-bind="setupAttrs(cell)"
+                                :is="cell[1].componentName"
+                                :field="cell[0]"
+                                :value.sync="formData[cell[0]]"
+                                v-bind="setupAttrs(cell[1])"
                                 @keepValue="keepValue"
                             ></component>
                         </el-form-item>
@@ -78,7 +78,7 @@
 <script>
 import { cloneDeep } from "lodash";
 import { flake } from "@/utils/tool";
-import { getWorker } from "./utils";
+import { setupFormSchema, getWorker } from "./utils";
 import { FormCellComponent } from "./install";
 
 import tagProcessFunc from "@/center/tag-process";
@@ -93,7 +93,7 @@ export default {
             default: () => flake.gen(),
         },
         schema: {
-            type: Object,
+            type: [Array, Object],
             required: true,
         },
 
@@ -141,9 +141,9 @@ export default {
     watch: {
         schema: {
             handler(newVal) {
-                const copySchema = cloneDeep(newVal);
-                this.setupFormData(copySchema);
+                const copySchema = setupFormSchema(cloneDeep(newVal));
                 this.formSchema = copySchema;
+                this.setupFormData(copySchema);
             },
             immediate: true,
             deep: true,
@@ -245,8 +245,9 @@ export default {
          * @param {Object} schema
          */
         setupFormData(schema) {
-            for (const field in schema) {
-                this.$set(this.formData, field, schema[field].value);
+            for (const iterator of schema) {
+                const [field, cell] = iterator;
+                this.$set(this.formData, field, cell.value);
             }
         },
         /**

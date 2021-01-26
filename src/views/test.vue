@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-07 22:31:36
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-26 15:21:20
+ * @LastEditTime: 2021-01-26 17:49:40
  * @Description: test.vue
 -->
 <template>
@@ -14,7 +14,6 @@
 <script>
 import schemaJSON from "@/components/mg-form/test/test-schema-v1.json";
 
-import { setupFormSchema } from "@/components/mg-form/utils";
 import MgForm from "@/components/mg-form";
 export default {
     name: "mg-test",
@@ -24,7 +23,8 @@ export default {
     data() {
         //这里存放数据
         return {
-            formSchema: {},
+            // formSchema: {},
+            formSchema: schemaJSON,
         };
     },
     //监听属性 类似于data概念
@@ -35,7 +35,7 @@ export default {
     methods: {},
     //生命周期 - 创建完成（可以访问当前this实例）
     created() {
-        this.formSchema = setupFormSchema(schemaJSON);
+        // this.formSchema = setupFormSchema(schemaJSON);
     },
     //生命周期 - 挂载完成（可以访问DOM元素）
     mounted() {},
