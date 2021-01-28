@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-22 13:08:30
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-26 18:04:47
+ * @LastEditTime: 2021-01-26 18:18:22
  * @Description: component mg-form VUE
 -->
 <template>
@@ -158,7 +158,6 @@ export default {
         keepValue(formHandler) {
             const { value } = formHandler;
             const { leaderTag } = formHandler.tag;
-
             leaderTag.forEach((tagName) => {
                 getWorker(this.formSchema, tagName).forEach((workerMan) =>
                     this.processHandler(tagName, value, workerMan)

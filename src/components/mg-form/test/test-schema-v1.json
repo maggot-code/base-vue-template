@@ -27,7 +27,9 @@
         },
         "eventSchema": {},
         "rulesSchema": [],
-        "leaderTag": [],
+        "leaderTag": [
+            "syncInput"
+        ],
         "workerTag": []
     },
     {
@@ -44,7 +46,9 @@
         "eventSchema": {},
         "rulesSchema": [],
         "leaderTag": [],
-        "workerTag": []
+        "workerTag": [
+            "syncInput"
+        ]
     },
     {
         "componentName": "mg-radio",

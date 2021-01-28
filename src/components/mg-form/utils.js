@@ -2,7 +2,7 @@
  * @Author: maggot-code
  * @Date: 2021-01-14 14:32:09
  * @LastEditors: maggot-code
- * @LastEditTime: 2021-01-26 18:07:16
+ * @LastEditTime: 2021-01-26 18:19:00
  * @Description: component mg-form utils tool
  */
 import { flake, mapObjectRepeat } from '@/utils/tool';
@@ -59,9 +59,17 @@ const checkErrorLog = (item, list, msg) => {
 
 // ---------------------分隔符----------------------------------
 export const getWorker = (schema, tagName) => {
-    return compact(Object.keys(schema).map(field => {
-        return schema[field].workerTag.indexOf(tagName) >= 0 && schema[field]
-    }))
+    const workerMan = [];
+    for (const iterator of schema) {
+        const [_, cell] = iterator;
+        const tagFlg = cell.workerTag.indexOf(tagName) >= 0;
+        tagFlg && workerMan.push(cell);
+    }
+    return workerMan;
+    // return compact(Object.keys(schema).map(field => {
+    //     console.log(field);
+    //     return schema[field].workerTag.indexOf(tagName) >= 0 && schema[field]
+    // }))
 }
 /**
  * @description: 设置表单结构
